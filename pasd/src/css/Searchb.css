@@ -1,0 +1,47 @@
+/* Container for the entire search bar */
+.search-container {
+  text-align: center;
+  margin-top: 202px;
+  background-color: rgba(234, 232, 228, 0.6);
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  }
+  
+  /* Wrapper to center elements */
+  .search-wrapper {
+    display: flex;
+    justify-content: center;
+    position: center;
+  }
+  
+  /* Styling for the input field */
+  .search-input {
+    display:flex;
+    flex:0.7;
+    width: 400px;
+    background-color: transparent; 
+    padding: 10px;
+    border: 0;
+    width: 100%;
+    outline: none;
+    font-size: 18px;
+  }
+  
+  /* Styling the search button */
+  .search-button {
+    flex:0.3;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border: none;
+    background-color: rgb(54, 52, 54);
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    text-align: center;
+    width: 100%;
+  }
+  .search-bar::placeholder {
+    color: black; /* Placeholder text color */}

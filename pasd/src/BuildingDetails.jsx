@@ -1,0 +1,346 @@
+/*BuildingDerails.js */
+
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import "./css/BuildingDetails.css";
+import { Dialog, DialogActions, DialogContent, IconButton } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
+import ZoomInIcon from "@mui/icons-material/ZoomIn";
+import ZoomOutIcon from "@mui/icons-material/ZoomOut";
+
+function BuildingDetails() {
+  const { id } = useParams();
+
+  const [foundBuilding, setFoundBuilding] = useState({});
+  const [selectedImage, setSelectedImage] = useState("");
+  const [zoomLevel, setZoomLevel] = useState(1); // State for zoom level
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/buildings/${id}`)
+      .then((res) => res.json())
+      .then((json) => {
+        setFoundBuilding(json);
+        console.log(json);
+      });
+  }, [id]);
+
+  if (!foundBuilding) {
+    return <h2 className="not-found">المبنى غير موجود</h2>;
+  }
+
+  const handleOpen = (image) => {
+    setSelectedImage(image);
+    setZoomLevel(1); // Reset zoom level when opening a new image
+  };
+
+  const handleClose = () => {
+    setSelectedImage(null);
+    setZoomLevel(1); // Reset zoom level when closing the dialog
+  };
+
+  const handleZoomIn = () => {
+    setZoomLevel((prev) => Math.min(prev + 0.2, 3)); // Max zoom level is 3
+  };
+
+  const handleZoomOut = () => {
+    setZoomLevel((prev) => Math.max(prev - 0.2, 0.5)); // Min zoom level is 0.5
+  };
+
+  return (
+    <div className="details-container">
+      <div className="details-card">
+        <div className="details-image-container">
+          {foundBuilding.images?.length > 0 ? (
+            foundBuilding.images.find((image) => image.type === "Front Image") ? (
+              <img
+                src={
+                  foundBuilding.images.find(
+                    (image) => image.type === "Front Image"
+                  ).url
+                }
+                alt={`${foundBuilding.building_name} Front Image`}
+                className="details-image"
+              />
+            ) : (
+              <img
+                src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
+                alt="No Front Image Available"
+                className="details-image"
+              />
+            )
+          ) : (
+            <img
+              src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
+              alt="No Image Available"
+              className="details-image"
+            />
+          )}
+        </div>
+        <div className="details-content">
+          <h1 className="details-title">{foundBuilding.building_name}</h1>
+          <p className="details-description">{foundBuilding.about}</p>
+
+          {/* Gallery Section */}
+          <div className="hero_section hero_section_1">
+            <div id="buildingCarousel" className="carousel slide" data-bs-ride="carousel">
+              {foundBuilding.images?.filter((image) => image.type !== "Front Image").length > 0 ? (
+                <>
+                  <div className="carousel-indicators">
+                    {foundBuilding.images
+                      .filter((image) => image.type !== "Front Image")
+                      .map((image, index) => (
+                        <button
+                          key={index}
+                          type="button"
+                          data-bs-target="#buildingCarousel"
+                          data-bs-slide-to={index}
+                          className={index === 0 ? "active" : ""}
+                          aria-current={index === 0 ? "true" : "false"}
+                          aria-label={`Slide ${index + 1}`}
+                        ></button>
+                      ))}
+                  </div>
+                  <div className="carousel-inner">
+                    {foundBuilding.images
+                      .filter((image) => image.type !== "Front Image")
+                      .map((image, index) => (
+                        <div
+                          key={index}
+                          className={`carousel-item ${index === 0 ? "active" : ""}`}
+                        >
+                          <img
+                            src={image.url}
+                            className="d-block w-100"
+                            alt={`${image.type} of ${foundBuilding.building_name}`}
+                            onClick={() => handleOpen(image.url)}
+                          />
+                        </div>
+                      ))}
+                  </div>
+                  <button
+                    className="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#buildingCarousel"
+                    data-bs-slide="prev"
+                  >
+                    <span
+                      className="carousel-control-prev-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span className="visually-hidden">Previous</span>
+                  </button>
+                  <button
+                    className="carousel-control-next"
+                    type="button"
+                    data-bs-target="#buildingCarousel"
+                    data-bs-slide="next"
+                  >
+                    <span
+                      className="carousel-control-next-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span className="visually-hidden">Next</span>
+                  </button>
+                </>
+              ) : (
+                <p>No images available for this building.</p>
+              )}
+            </div>
+            <p className="details-description">{foundBuilding.en_description}</p>
+          </div>
+          {/* section_2 */}
+
+          <div className="slider_360">
+            <h2 className="details-title">360 view</h2>
+            { foundBuilding.thsLink !== "" ?
+              <div className="view_360_div" style={{ position: "relative",  overflow: "hidden" }}>
+              <iframe
+                src={foundBuilding.thsLink}
+                frameBorder="0"
+                allowFullScreen
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                }}
+                title="360 Degree View"
+              >
+              </iframe>
+            </div>
+            :
+            <h2 className="mt-4">No 360 view for this building yet...</h2>
+            }
+          </div>
+
+          {/* Image Dialog */}
+          {/* Dialog for viewing the image */}
+          <Dialog open={Boolean(selectedImage)} onClose={handleClose} maxWidth="lg">
+            <DialogActions>
+              {/* Zoom In Button */}
+              <IconButton onClick={handleZoomIn} title="Zoom In">
+                <ZoomInIcon />
+              </IconButton>
+              {/* Zoom Out Button */}
+              <IconButton onClick={handleZoomOut} title="Zoom Out">
+                <ZoomOutIcon />
+              </IconButton>
+              {/* Close Button */}
+              <IconButton onClick={handleClose} title="Close">
+                <ClearIcon />
+              </IconButton>
+            </DialogActions>
+            <DialogContent
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                overflow: "auto", // Prevents scrollbars from appearing
+              }}
+            >
+              <img
+                src={selectedImage}
+                alt="Selected"
+                style={{
+                  transform: `scale(${zoomLevel})`, // Apply zoom level
+                  transition: "transform 0.3s ease", // Smooth zoom effect
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                }}
+              />
+            </DialogContent>
+          </Dialog>
+
+          <table className="details-table">
+            <tbody>
+              <tr>
+                <th>Architect Name</th>
+                <td>
+                  {foundBuilding.architects?.map(architect => (
+                    <li>{architect.architect_id?.architect_name}</li>
+                    ))}
+                </td>
+              </tr>
+              <tr>
+                <th>Country</th>
+                <td>{foundBuilding.address_id?.city_id?.country_id?.country_name}</td>
+              </tr>
+              <tr>
+                <th>Location</th>
+                <td>{foundBuilding.address_id?.city_id?.city_name}</td>
+              </tr>
+              <tr>
+                <th>Address</th>
+                <td>{foundBuilding.address_id?.street}</td>
+              </tr>
+              <tr>
+                <th>Date of Construction</th>
+                <td>{foundBuilding.dateOfConstruction}</td>
+              </tr>
+              <tr>
+                <th>Original Use</th>
+                <td>
+                  {foundBuilding.usages?.find((usage) => usage.type === "original")?.usage_id?.use_type || ""}
+                </td>
+              </tr>
+              <tr>
+                <th>Current Use</th>
+                <td>
+                  {foundBuilding.usages?.find((usage) => usage.type === "current")?.usage_id?.use_type || ""}
+                </td>
+              </tr>
+              <tr>
+                <th>Area (m²)</th>
+                <td>{foundBuilding.area}</td>
+              </tr>
+              <tr>
+                <th>Status</th>
+                <td>
+                  {foundBuilding.statuses?.map(status => (
+                    <li key={status._id}>{status.status_id?.status_name}</li>
+                  ))}
+                </td>
+              </tr>
+              <tr>
+                <th>Building During the Reign</th>
+                <td>{foundBuilding.bdr_id?.bdr_name}</td>
+              </tr>
+              <tr>
+                <th>Documentation Date</th>
+                <td>{foundBuilding.documentationDate}</td>
+              </tr>
+              <tr>
+                <th>Number of Floors</th>
+                <td>{foundBuilding.numberOfFloors}</td>
+              </tr>
+              <tr>
+              <th>Owner's Name</th>
+                <td>{foundBuilding.owners?.map(owner => (
+                  <li key={owner._id}>{owner.owner_id?.owner_name}</li>
+                  ))}
+                </td>
+              </tr>
+              <tr>
+                <th>Tenant</th>
+                <td>{foundBuilding.tenants?.map(tenant => (
+                  <li key={tenant._id}>{tenant.tenant_id?.tenant_name}</li>
+                  ))}
+                </td>
+              </tr>
+              <tr>
+                <th>Name of Notaries</th>
+                <td>
+                  {foundBuilding.notaries?.map(notary => (
+                  <li>{notary.notary_id?.notary_name}</li>
+                  ))}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          {foundBuilding.architects?.length > 0 && (
+            <div className="architects-section">
+              {foundBuilding.architects.map((architect) => (
+                architect.architect_id?.relatedBuildings?.length > 0 && (
+                  <div key={architect._id}>
+                    <h3 className="mb-4 mt-4">More buildings for Architect <span>{architect.architect_id?.architect_name}</span></h3>
+                    <div className="building-grid">
+                      {architect.architect_id?.relatedBuildings?.map(building => (
+                           <div className="card">
+                           <div className="card-image-container">
+                             {building.image?.url ?
+                               <img src={`${building.image?.url}`} alt={`${building.building_name} image`} className="card-image" />
+                               :
+                               <img src={'https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg'} alt={`${building.building_name} image`} className="card-image" />
+                             }
+                           </div>
+                           <div className="card-content">
+                             <h3>{building.building_name}</h3>
+                             <p>
+                               <strong>City: </strong>
+                               {building.address_id?.city_id?.city_name}
+                             </p>
+                             <a href={`/Buildings/${building._id}`} className="card-button">
+                               {("Learn More")}
+                             </a>
+                           </div>
+                         </div>
+                      ))}
+                    </div>
+                  </div>
+                )
+              ))}
+            </div>
+          )}
+          {/* <div className="details-buttons">
+            <button className="details-btn primary" onClick={() => navigate("/")}>العودة إلى الرئيسية</button>
+            <button className="details-btn secondary" onClick={() => navigate("/")}>عرض المزيد من المباني</button>
+          </div> */}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default BuildingDetails;

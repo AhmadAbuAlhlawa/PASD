@@ -1,0 +1,48 @@
+/*Buildings.css*/
+.Buildings {
+    text-align: center;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .building-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .filter-btn {
+    margin-left: 10px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .filter-btn:hover {
+    background-color: #6a6a6a;
+  }
+  
+  .filter-menu {
+    padding: 10px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    display: none;
+    z-index: 10;
+  }
+  
+  .filter-menu.show {
+    display: block;
+  }
+  
+  .filter-menu button {
+    display: block;
+    margin: 5px 0;
+  }
+  
