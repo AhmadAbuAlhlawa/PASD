@@ -42,6 +42,8 @@ function Buildings() {
         return res.json();
       })
       .then((json) => {
+        console.log(json);
+        
         setPagesCount(json.Counts_of_Pages || 1); // Fallback to 1 page if no data
         setFoundBuildings(json.buildings || []); // Handle empty response
         setFilteredBuildings(json.buildings || []); // Handle empty response

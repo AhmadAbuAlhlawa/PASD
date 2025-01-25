@@ -10,8 +10,8 @@ function BuildingCard({ building }) {
   return (
     <div className="card">
       <div className="card-image-container">
-        {building.image?.url ?
-          <img src={`${building.image?.url}`} alt={`${building.building_name} image`} className="card-image" />
+        {building.image?.filename ?
+          <img src={`${building.image?.filename}`} alt={`${building.building_name} image`} className="card-image" />
           :
           <img src={'https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg'} alt={`${building.building_name} image`} className="card-image" />
         }

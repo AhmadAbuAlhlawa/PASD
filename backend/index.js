@@ -371,16 +371,11 @@ app.get('/buildings', async (req, res) => {
 
     // Create a map of images by building ID for quick lookup
     const imageMap = images.reduce((map, image) => {
-      // Check if the image.filename is already a full URL
-      const isFullURL = image.filename.startsWith("http") || image.filename.startsWith("https");
-
+      
       map[image.building_id] = {
         image_id: image._id,
         file_id: image.fileId,
-        filename: image.filename,
-        url: isFullURL
-          ? image.filename // Use the full URL as is
-          : `http://localhost:5000/files/${encodeURIComponent(image.filename)}`, // Encode and construct local file URL
+        filename: image.filename
       };
 
       return map;
@@ -1300,13 +1295,9 @@ app.get('/buildings/:id', async (req, res) => {
     if (images.length > 0) {
       // Assign all image details (with proper URL handling) to the building
       building.images = images.map(image => {
-        const isFullURL = image.filename.startsWith('http') || image.filename.startsWith('https');
         return {
           type: image.Type, // Include the Type of the image
-          filename: image.filename,
-          url: isFullURL
-            ? image.filename // Use the full URL as-is
-            : `http://localhost:5000/files/${encodeURIComponent(image.filename)}`, // Construct and encode the local file URL
+          filename: image.filename
         };
       });
     } else {
@@ -1351,28 +1342,30 @@ app.get('/buildings/:id', async (req, res) => {
           .lean();
 
         // Fetch front images for related buildings
-        relatedBuildings = relatedBuildings.map(relatedBuilding => {
-          const building = relatedBuilding.building_id;
+        relatedBuildings = await Promise.all(
+          relatedBuildings.map(async relatedBuilding => {
+            if (!relatedBuilding || !relatedBuilding.building_id) return null;
 
-          // Find the front image for the building
-          const image = images.find(img => img.building_id === building._id.toString() && img.Type === 'Front Image');
-          if (image) {
-            const isFullURL = image.filename.startsWith('http') || image.filename.startsWith('https');
-            building.image = {
-              image_id: image._id,
-              file_id: image.fileId,
-              filename: image.filename,
-              url: isFullURL
-                ? image.filename
-                : `http://localhost:5000/files/${encodeURIComponent(image.filename)}`, // Properly encoded
-            };
-          }
-          return building;
-        });
+            const images = await conn.db.collection('images').find({
+              building_id: relatedBuilding.building_id._id.toString(),
+            }).toArray();
 
-        // Filter out the current building from relatedBuildings
+            // Find the front image for the building
+            const image = images.find(img => img.building_id === relatedBuilding.building_id._id.toString() && img.Type === 'Front Image');
+            if (image) {
+              relatedBuilding.building_id.image = {
+                image_id: image._id,
+                file_id: image.fileId,
+                filename: image.filename,
+              };
+            }
+            return relatedBuilding.building_id;
+          })
+        );
+
+        // Filter out null values and the current building
         architectRelation.architect_id.relatedBuildings = relatedBuildings.filter(
-          relBuilding => relBuilding._id.toString() !== building._id.toString()
+          relBuilding => relBuilding && relBuilding._id.toString() !== building._id.toString()
         );
       }
     }
@@ -1392,7 +1385,6 @@ app.get('/buildings/:id', async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 
 app.get('/buildings/:building_id/images', async (req, res) => {
   try {

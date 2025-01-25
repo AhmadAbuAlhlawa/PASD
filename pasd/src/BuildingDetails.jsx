@@ -12,15 +12,22 @@ function BuildingDetails() {
   const { id } = useParams();
 
   const [foundBuilding, setFoundBuilding] = useState({});
+  const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState("");
   const [zoomLevel, setZoomLevel] = useState(1); // State for zoom level
 
   useEffect(() => {
+    setLoading(true);
     fetch(`http://localhost:5000/buildings/${id}`)
       .then((res) => res.json())
       .then((json) => {
+        setLoading(false);
         setFoundBuilding(json);
         console.log(json);
+      })
+      .catch((error) => {
+        console.error("Error fetching building:", error);
+        setLoading(false);
       });
   }, [id]);
 
@@ -48,6 +55,9 @@ function BuildingDetails() {
 
   return (
     <div className="details-container">
+      {loading ?
+        <h2>Loading...</h2>
+      :
       <div className="details-card">
         <div className="details-image-container">
           {foundBuilding.images?.length > 0 ? (
@@ -56,7 +66,7 @@ function BuildingDetails() {
                 src={
                   foundBuilding.images.find(
                     (image) => image.type === "Front Image"
-                  ).url
+                  ).filename
                 }
                 alt={`${foundBuilding.building_name} Front Image`}
                 className="details-image"
@@ -109,10 +119,10 @@ function BuildingDetails() {
                           className={`carousel-item ${index === 0 ? "active" : ""}`}
                         >
                           <img
-                            src={image.url}
+                            src={image.filename}
                             className="d-block w-100"
                             alt={`${image.type} of ${foundBuilding.building_name}`}
-                            onClick={() => handleOpen(image.url)}
+                            onClick={() => handleOpen(image.filename)}
                           />
                         </div>
                       ))}
@@ -309,8 +319,8 @@ function BuildingDetails() {
                       {architect.architect_id?.relatedBuildings?.map(building => (
                            <div className="card">
                            <div className="card-image-container">
-                             {building.image?.url ?
-                               <img src={`${building.image?.url}`} alt={`${building.building_name} image`} className="card-image" />
+                             {building.image?.filename ?
+                               <img src={`${building.image?.filename}`} alt={`${building.building_name} image`} className="card-image" />
                                :
                                <img src={'https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg'} alt={`${building.building_name} image`} className="card-image" />
                              }
@@ -339,6 +349,7 @@ function BuildingDetails() {
           </div> */}
         </div>
       </div>
+      }
     </div>
   );
 }
