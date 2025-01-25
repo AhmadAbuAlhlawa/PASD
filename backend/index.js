@@ -325,7 +325,7 @@ app.get('/buildings', async (req, res) => {
       .lean()
       .populate({
         path: 'address_id',
-        populate: {
+        populate: { 
           path: 'city_id',
         },
       });
@@ -358,12 +358,18 @@ app.get('/buildings', async (req, res) => {
 
     // Create a map of images by building ID for quick lookup
     const imageMap = images.reduce((map, image) => {
+      // Check if the image.filename is already a full URL
+      const isFullURL = image.filename.startsWith("http") || image.filename.startsWith("https");
+
       map[image.building_id] = {
         image_id: image._id,
         file_id: image.fileId,
         filename: image.filename,
-        url: `http://localhost:5000/files/${image.filename}`,
+        url: isFullURL
+          ? image.filename // Use the full URL as is
+          : `http://localhost:5000/files/${encodeURIComponent(image.filename)}`, // Encode and construct local file URL
       };
+
       return map;
     }, {});
 
