@@ -320,15 +320,28 @@ app.get('/getAdmins', async (req, res) => {
 // API Endpoint to Fetch Buildings with Architect and City
 app.get('/buildings', async (req, res) => {
   try {
+    // buildings counts 
+    const buildings_per_page = 8 // 8 per page
+    const page = req.query.page || 1; // number of page, initial is 1 
+    const skip = (page - 1) * buildings_per_page // skip of games when fetch
+    const {title} = req.query;
+    let query = {};
+    if (title) {
+        const building_name = title;    
+        const regex = new RegExp(building_name, "i");
+        query.building_name = regex;
+    }
+
     // Fetch all buildings with their addresses and cities
-    let buildings = await Buildings_Model.find()
-      .lean()
-      .populate({
-        path: 'address_id',
-        populate: { 
-          path: 'city_id',
-        },
-      });
+    let buildings = await Buildings_Model.find(query).limit(buildings_per_page).lean().limit(buildings_per_page).skip(skip)
+    .populate({
+      path: 'address_id',
+      populate: { 
+        path: 'city_id',
+      },
+    });
+    const buildingsCount = await Buildings_Model.countDocuments(query);
+    const Counts_of_Pages = Math.ceil(buildingsCount / buildings_per_page) // Round up to nearest integer
 
     // Convert building _id values to strings
     const buildingIds = buildings.map((building) => building._id.toString());
@@ -391,7 +404,7 @@ app.get('/buildings', async (req, res) => {
     });
 
     // Send updated buildings as the response
-    res.status(200).json(buildings);
+    res.status(200).json({buildings, Counts_of_Pages});
   } catch (error) {
     console.error('Error fetching buildings:', error); // Debugging
     res.status(500).json({ error: 'Internal Server Error' });

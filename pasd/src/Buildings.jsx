@@ -1,50 +1,75 @@
-// Buildings.jsx
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import BuildingCard from "./BuildingCard";
 import { TextField, Box, Button } from "@mui/material";
+import Pagination from '@mui/material/Pagination';
 import "./css/Buildings.css";
 
 function Buildings() {
-  const navigate = useNavigate();
-  const [filteredBuildings, setFilteredBuildings] = useState([]); 
-  const [searchTerm, setSearchTerm] = useState(""); 
-  const [filterMenuVisible, setFilterMenuVisible] = useState(false); 
-  const [foundBuildings, setFoundBuildings] = useState([]); 
-  const [loading, setLoading] = useState(false);
+  const location = useLocation();
   
+  const initialPage = new URLSearchParams(location.search).get('page');
+  const [page, setPage] = useState(initialPage ? parseInt(initialPage) : 1);
+
+  const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState(''); // Debounced search value
+  const [filterMenuVisible, setFilterMenuVisible] = useState(false); 
+  const [loading, setLoading] = useState(false);
+  const [pagesCount, setPagesCount] = useState(0);
+  const [foundBuildings, setFoundBuildings] = useState([]); 
+  const [filteredBuildings, setFilteredBuildings] = useState([]); 
+  
+  // Debouncing logic for the search input
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search); // Update debounced search after delay
+    }, 300); // Delay of 300ms
+
+    return () => clearTimeout(timer); // Clear timeout on cleanup
+  }, [search]);
+
+  useEffect(() => {
+    const controller = new AbortController(); // Create AbortController for request cancellation
+    const signal = controller.signal;
+  
     setLoading(true);
-    fetch(`http://localhost:5000/buildings/`)
-      .then((res) => res.json())
+  
+    fetch(`http://localhost:5000/buildings?page=${page}&title=${debouncedSearch}`, { signal })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Request failed");
+        }
+        return res.json();
+      })
       .then((json) => {
-        setFoundBuildings(json);
-        console.log(json)
+        setPagesCount(json.Counts_of_Pages || 1); // Fallback to 1 page if no data
+        setFoundBuildings(json.buildings || []); // Handle empty response
+        setFilteredBuildings(json.buildings || []); // Handle empty response
         setLoading(false);
-        setFilteredBuildings(json); 
       })
       .catch((err) => {
+        if (err.name === "AbortError") {
+          console.log("Request aborted");
+        } else {
+          console.error("Failed to fetch buildings:", err);
+        }
         setLoading(false);
-        console.error("Failed to fetch buildings:", err)
       });
-      
-  }, []);
-
   
-  const handleSearch = (event) => {
-    const term = event.target.value;
-    setSearchTerm(term);
+    return () => controller.abort(); // Abort previous request when effect is re-run
+  }, [page, debouncedSearch]);
 
-    if (term.trim() === "") {
-      setFilteredBuildings(foundBuildings); 
-    } else {
-      const filtered = foundBuildings.filter((building) =>
-        building.building_name.toLowerCase().includes(term.toLowerCase())
-      );
-      setFilteredBuildings(filtered);
-    }
+  // Handle page change
+  const handlePageChange = (e, value) => {
+    if (page === value) return;
+    setPage(value);
   };
 
+  const handleSearchInput = (e) => {
+    const text = e.target.value.trimStart();
+    setPage(1); // Reset page number to 1 on new search
+    setSearch(text);
+  };
   
   const toggleFilterMenu = () => {
     setFilterMenuVisible((prev) => !prev);
@@ -68,8 +93,8 @@ function Buildings() {
           variant="outlined"
           size="small"
           label="search buildings"
-          value={searchTerm}
-          onChange={handleSearch}
+          value={search}
+          onChange={handleSearchInput}
           fullWidth
           sx={{
             backgroundColor: "white",
@@ -82,25 +107,37 @@ function Buildings() {
         </Button>
       </Box>
 
-
       {filterMenuVisible && (
         <div className="filter-menu show">
           <Button onClick={() => applyFilter("alphabetical")}>ترتيب أبجدي</Button>
         </div>
       )}
 
-
-      {loading ?
+      {loading ? (
         <h2>Loading...</h2>
-      :
-      <div className="building-grid">
-        {filteredBuildings.map((building) => (
-          <div key={building._id}>
-            <BuildingCard building={building} />
+      ) : (
+        <>
+          <div className="building-grid">
+            {filteredBuildings.map((building) => (
+              <div key={building._id}>
+                <BuildingCard building={building} />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      }
+          {pagesCount > 1 && /* Render Pagination only if pages count > 1 */
+          <div className="d-flex justify-content-center mt-5">
+            <Pagination
+              count={pagesCount}
+              page={page}
+              onChange={handlePageChange}
+              shape="rounded"
+              color="standard"
+              className="whiteTextPagination"
+            />
+          </div>
+          }
+        </>
+      )}
     </div>
   );
 }
