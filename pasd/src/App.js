@@ -10,20 +10,24 @@ import Main from "./Main";
 function App() {
   return (
     <>
-    <Router>
-        <Navbar />
-        <Navbar2 />
-        <Routes>
-          <Route path='/' element={<Main/>}/>
-          <Route path='/Buildings' exact element={<Buildings/>}/>
-          <Route path='/Buildings/:id' element={<BuildingDetails/>} />
-          <Route path='/Cities' element={"cities element"}/>
-        </Routes>
-        <div className="h">
-          <a href='a'>Contact us   | </a>
-          <a href='a'>Privacy Policy</a>
+      <Router>
+        <div className="app-container">
+          <div className="content">
+            <Navbar />
+            <Navbar2 />
+            <Routes>
+              <Route path="/" element={<Main />} />
+              <Route path="/Buildings" exact element={<Buildings />} />
+              <Route path="/Buildings/:id" element={<BuildingDetails />} />
+              <Route path="/Cities" element={"cities element"} />
+            </Routes>
+          </div>
+          <footer className="h">
+            <a href="a">Contact us | </a>
+            <a href="a">Privacy Policy</a>
+          </footer>
         </div>
-    </Router>
+      </Router>
     </>
   );
 }
