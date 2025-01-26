@@ -4,12 +4,48 @@
     padding: 20px;
     position: relative;
   }
-  
+.Buildings  .search-container {
+    text-align: center;
+    margin-top: 202px;
+    background-color: rgba(234, 232, 228, 0.6);
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    margin: 50px auto;
+    display: flex;
+    justify-content: space-between;
+}
+.Buildings .search-container input {
+  display: flex;
+  flex: 1;
+  background-color: transparent;
+  padding: 10px;
+  border: 0;
+  width: 100%;
+  outline: none;
+  font-size: 18px;
+}
+.Buildings .search-container .search-button {
+  flex: 0.3 1;
+  max-width: 110px;
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  background-color: rgb(54, 52, 54);
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  text-transform: capitalize;
+}
   .building-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    row-gap: 40px;
+    gap: 30px;
+    justify-items: center;
+    padding: 40px 0;
   }
   
   .filter-btn {

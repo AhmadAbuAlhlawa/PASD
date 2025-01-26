@@ -2,7 +2,6 @@
   background-color: #ffffff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: 300px;
   max-width: 320px;
   aspect-ratio: 1 / 1.5;
 
@@ -34,11 +33,19 @@
   font-size: 1.2rem;
   color: #333;
   margin: 10px 0;
-  text-align: center;
+  margin-bottom: 15px;
+  /* text-align: center; */
+  text-transform: capitalize;
+  font-weight: bold;
 }
 
-
-
+.card p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
 .card-button {
   background-color: #f0a500;
   color: #fff;
