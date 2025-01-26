@@ -50,6 +50,15 @@
     border: 1px solid #626262;
     padding: 5px;
 }
+.footer_bottom .pages_links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.pages_links a {
+    color: #fff;
+    text-decoration: none;
+}
 @media (min-width: 992px) {
     .footer_container .footer_row {
         flex-wrap: nowrap;

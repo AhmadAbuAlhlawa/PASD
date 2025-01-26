@@ -24,7 +24,10 @@ const Footer = () => {
             </div>
             <hr />
             <div className='footer_bottom'>
-                <p>© {new Date().getFullYear()} All copyrights reserved for Al-Quds University.</p>
+                <div>
+                    <p>© {new Date().getFullYear()} All copyrights reserved for Al-Quds University.</p>
+                    <p className='pages_links'><a href="privacy-policy">Privacy Policy</a> | <a href="/about-us">About Us</a></p>
+                </div>
                 <p className='social_links'>
                     <a href='https://www.alquds.edu/' target='_blank' rel='noopener noreferrer'><LanguageIcon /></a>
                     <a href='https://ps.linkedin.com/school/alquds-university/' target='_blank' rel='noopener noreferrer'><LinkedInIcon /></a>
