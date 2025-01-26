@@ -18,16 +18,7 @@ function BuildingCard({ building }) {
       </div>
       <div className="card-content">
         <h3>{building.building_name}</h3>
-        <p>
-          <strong>Archetict:</strong>
-          {building.architects?.map(architect => (
-            <li>{architect.architect_name}</li>
-          ))}
-        </p>
-        <p>
-          <strong>City: </strong>
-          {building.address_id?.city_id?.city_name}
-        </p>
+        <p>{building.en_description}</p>
         <a href={`/Buildings/${building._id}`} className="card-button">
           {("Learn More")}
         </a>

@@ -1,5 +1,3 @@
-/*BuildingDerails.js */
-
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./css/BuildingDetails.css";
@@ -7,6 +5,7 @@ import { Dialog, DialogActions, DialogContent, IconButton } from "@mui/material"
 import ClearIcon from "@mui/icons-material/Clear";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
+import SwiperBuildings from './components/SwiperBuildings';
 
 function BuildingDetails() {
   const { id } = useParams();
@@ -59,6 +58,7 @@ function BuildingDetails() {
         <h2>Loading...</h2>
       :
       <div className="details-card">
+        <h1 className="details-title">{foundBuilding.building_name}</h1>
         <div className="details-image-container">
           {foundBuilding.images?.length > 0 ? (
             foundBuilding.images.find((image) => image.type === "Front Image") ? (
@@ -87,11 +87,13 @@ function BuildingDetails() {
           )}
         </div>
         <div className="details-content">
-          <h1 className="details-title">{foundBuilding.building_name}</h1>
           <p className="details-description">{foundBuilding.about}</p>
 
           {/* Gallery Section */}
           <div className="hero_section hero_section_1">
+          {foundBuilding.images?.filter((image) => image.type !== "Front Image").length > 0 && 
+            <h4>For full view, click on the photo</h4>
+          }
             <div id="buildingCarousel" className="carousel slide" data-bs-ride="carousel">
               {foundBuilding.images?.filter((image) => image.type !== "Front Image").length > 0 ? (
                 <>
@@ -221,15 +223,17 @@ function BuildingDetails() {
               />
             </DialogContent>
           </Dialog>
-
+        <div className="details-table-container">
           <table className="details-table">
             <tbody>
               <tr>
                 <th>Architect Name</th>
                 <td>
-                  {foundBuilding.architects?.map(architect => (
-                    <li>{architect.architect_id?.architect_name}</li>
-                    ))}
+                  {foundBuilding.architects?.map((architect) => (
+                    <li key={architect.architect_id?._id}>
+                      {architect.architect_id?.architect_name}
+                    </li>
+                  ))}
                 </td>
               </tr>
               <tr>
@@ -251,23 +255,31 @@ function BuildingDetails() {
               <tr>
                 <th>Original Use</th>
                 <td>
-                  {foundBuilding.usages?.find((usage) => usage.type === "original")?.usage_id?.use_type || ""}
+                  {foundBuilding.usages?.find((usage) => usage.type === "original")?.usage_id
+                    ?.use_type || ""}
                 </td>
               </tr>
               <tr>
                 <th>Current Use</th>
                 <td>
-                  {foundBuilding.usages?.find((usage) => usage.type === "current")?.usage_id?.use_type || ""}
+                  {foundBuilding.usages?.find((usage) => usage.type === "current")?.usage_id
+                    ?.use_type || ""}
                 </td>
               </tr>
               <tr>
                 <th>Area (m²)</th>
                 <td>{foundBuilding.area}</td>
               </tr>
+            </tbody>
+          </table>
+
+          {/* Right Table */}
+          <table className="details-table">
+            <tbody>
               <tr>
                 <th>Status</th>
                 <td>
-                  {foundBuilding.statuses?.map(status => (
+                  {foundBuilding.statuses?.map((status) => (
                     <li key={status._id}>{status.status_id?.status_name}</li>
                   ))}
                 </td>
@@ -285,68 +297,35 @@ function BuildingDetails() {
                 <td>{foundBuilding.numberOfFloors}</td>
               </tr>
               <tr>
-              <th>Owner's Name</th>
-                <td>{foundBuilding.owners?.map(owner => (
-                  <li key={owner._id}>{owner.owner_id?.owner_name}</li>
+                <th>Owner's Name</th>
+                <td>
+                  {foundBuilding.owners?.map((owner) => (
+                    <li key={owner._id}>{owner.owner_id?.owner_name}</li>
                   ))}
                 </td>
               </tr>
               <tr>
                 <th>Tenant</th>
-                <td>{foundBuilding.tenants?.map(tenant => (
-                  <li key={tenant._id}>{tenant.tenant_id?.tenant_name}</li>
+                <td>
+                  {foundBuilding.tenants?.map((tenant) => (
+                    <li key={tenant._id}>{tenant.tenant_id?.tenant_name}</li>
                   ))}
                 </td>
               </tr>
               <tr>
                 <th>Name of Notaries</th>
                 <td>
-                  {foundBuilding.notaries?.map(notary => (
-                  <li>{notary.notary_id?.notary_name}</li>
+                  {foundBuilding.notaries?.map((notary) => (
+                    <li key={notary._id}>{notary.notary_id?.notary_name}</li>
                   ))}
                 </td>
               </tr>
             </tbody>
           </table>
-
+          </div>
           {foundBuilding.architects?.length > 0 && (
-            <div className="architects-section">
-              {foundBuilding.architects.map((architect) => (
-                architect.architect_id?.relatedBuildings?.length > 0 && (
-                  <div key={architect._id}>
-                    <h3 className="mb-4 mt-4">More buildings for Architect <span>{architect.architect_id?.architect_name}</span></h3>
-                    <div className="building-grid">
-                      {architect.architect_id?.relatedBuildings?.map(building => (
-                           <div className="card">
-                           <div className="card-image-container">
-                             {building.image?.filename ?
-                               <img src={`${building.image?.filename}`} alt={`${building.building_name} image`} className="card-image" />
-                               :
-                               <img src={'https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg'} alt={`${building.building_name} image`} className="card-image" />
-                             }
-                           </div>
-                           <div className="card-content">
-                             <h3>{building.building_name}</h3>
-                             <p>
-                               <strong>City: </strong>
-                               {building.address_id?.city_id?.city_name}
-                             </p>
-                             <a href={`/Buildings/${building._id}`} className="card-button">
-                               {("Learn More")}
-                             </a>
-                           </div>
-                         </div>
-                      ))}
-                    </div>
-                  </div>
-                )
-              ))}
-            </div>
+            <SwiperBuildings architects={foundBuilding?.architects} />
           )}
-          {/* <div className="details-buttons">
-            <button className="details-btn primary" onClick={() => navigate("/")}>العودة إلى الرئيسية</button>
-            <button className="details-btn secondary" onClick={() => navigate("/")}>عرض المزيد من المباني</button>
-          </div> */}
         </div>
       </div>
       }
