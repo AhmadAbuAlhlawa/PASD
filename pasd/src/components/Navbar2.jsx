@@ -6,7 +6,7 @@ function Navbar2() {
   const location = useLocation();
 
   return (
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
   <div class="container-fluid">
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,15 +19,11 @@ function Navbar2() {
         </li>
         {location.pathname === "/" && (
           <li className="nav-item">
-            <a className="nav-link" href="/#about_us">
-              About us
-            </a>
+            <a className="nav-link" href="/#about_pasd">About PASD</a>
           </li>
         )}
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Archive
-          </a>
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Archive</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/Cities">Cities</a></li>
             <li><a class="dropdown-item" href="/Buildings">Buildings</a></li>
@@ -35,7 +31,7 @@ function Navbar2() {
           </ul>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/Donate">Donate</a>
+          <a className="nav-link" href="/support-us">Support Us</a>
         </li>
       </ul>
     </div>
