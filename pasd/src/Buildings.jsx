@@ -90,25 +90,15 @@ function Buildings() {
 
   return (
     <div className="Buildings">
-      <Box sx={{ padding: "20px", textAlign: "center" }}>
-        <TextField
-          variant="outlined"
-          size="small"
-          label="search buildings"
+      <div className="search-container">
+        <input type="text"
           value={search}
           onChange={handleSearchInput}
-          fullWidth
-          sx={{
-            backgroundColor: "white",
-            borderRadius: "4px",
-            maxWidth: "600px",
-          }}
+          placeholder="Search here..."
+          className="search-input"
         />
-        <Button className="filter-btn" onClick={toggleFilterMenu}>
-          filter
-        </Button>
-      </Box>
-
+        <Button className="search-button" onClick={toggleFilterMenu}>Filter</Button>
+      </div>
       {filterMenuVisible && (
         <div className="filter-menu show">
           <Button onClick={() => applyFilter("alphabetical")}>ترتيب أبجدي</Button>
@@ -121,9 +111,7 @@ function Buildings() {
         <>
           <div className="building-grid">
             {filteredBuildings.map((building) => (
-              <div key={building._id}>
-                <BuildingCard building={building} />
-              </div>
+              <BuildingCard building={building} />
             ))}
           </div>
           {pagesCount > 1 && /* Render Pagination only if pages count > 1 */
