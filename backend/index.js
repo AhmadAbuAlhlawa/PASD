@@ -361,23 +361,6 @@ app.get('/buildings_frontend', async (req, res) => {
       Type: 'Front Image',
     }).toArray();
 
-    // Fetch all architect relationships for the buildings in one query
-    const buildingsArchitect = await Buildings_Architects_Model.find({
-      building_id: { $in: buildingIds },
-    })
-      .populate('architect_id')
-      .lean();
-
-    // Create a map of architects by building ID for quick lookup
-    const architectMap = buildingsArchitect.reduce((map, relation) => {
-      const { building_id, architect_id } = relation;
-      if (!map[building_id]) {
-        map[building_id] = [];
-      }
-      map[building_id].push(architect_id);
-      return map;
-    }, {});
-
     // Create a map of images by building ID for quick lookup
     const imageMap = images.reduce((map, image) => {
       
@@ -397,11 +380,6 @@ app.get('/buildings_frontend', async (req, res) => {
       // Assign the corresponding image to the building
       if (imageMap[buildingId]) {
         building.image = imageMap[buildingId];
-      }
-
-      // Assign the corresponding architects to the building
-      if (architectMap[buildingId]) {
-        building.architects = architectMap[buildingId];
       }
 
       return building;
