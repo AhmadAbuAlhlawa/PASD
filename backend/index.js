@@ -316,9 +316,18 @@ app.get('/getAdmins', async (req, res) => {
         res.status(500).json({ message: 'Error fetching admins', error });
     }
 });
-
-// API Endpoint to Fetch Buildings with Architect and City
+// Fetch Buildings
 app.get('/buildings', async (req, res) => {
+  try {
+    const buildings = await Buildings_Model.find(); // Fetch all Building
+    res.status(200).json(buildings); // Respond with admins in JSON format
+  } catch (error) {
+    console.error("Error fetching buildings:", error); // Debugging
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+// API Endpoint to Fetch Buildings with Architect and City
+app.get('/buildings_frontend', async (req, res) => {
   try {
     // buildings counts 
     const buildings_per_page = 8 // 8 per page
@@ -1266,8 +1275,20 @@ app.get('/images-by-building/:buildingId', async (req, res) => {
         res.status(500).json({ error: 'An error occurred' });
     }
 });
-
+//Fetch a Building by ID
 app.get('/buildings/:id', async (req, res) => {
+  try {
+    const building = await Buildings_Model.findById(req.params.id);
+    if (!building) {
+      return res.status(404).json({ message: 'Building not found' });
+    }
+    res.json(building);
+  } catch (error) {
+    console.error('Error fetching building:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+app.get('/buildings_frontend/:id', async (req, res) => {
   try {
     // Find the building by _id from the database
     let building = await Buildings_Model.findById(req.params.id)

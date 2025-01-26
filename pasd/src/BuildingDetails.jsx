@@ -18,7 +18,7 @@ function BuildingDetails() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:5000/buildings/${id}`)
+    fetch(`http://localhost:5000/buildings_frontend/${id}`)
       .then((res) => res.json())
       .then((json) => {
         setLoading(false);

@@ -34,7 +34,7 @@ function Buildings() {
   
     setLoading(true);
   
-    fetch(`http://localhost:5000/buildings?page=${page}&title=${debouncedSearch}`, { signal })
+    fetch(`http://localhost:5000/buildings_frontend?page=${page}&title=${debouncedSearch}`, { signal })
       .then((res) => {
         if (!res.ok) {
           throw new Error("Request failed");
