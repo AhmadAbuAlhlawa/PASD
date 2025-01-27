@@ -17,16 +17,10 @@ code {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: #E5E4E2;
 }
 
 /* Main content should grow to fill available space */
 .content {
   flex: 1;
-}
-
-/* Footer styling */
-.footer {
-  background-color: #f1f1f1;
-  text-align: center;
-  padding: 1rem 0;
 }
