@@ -1,0 +1,150 @@
+/*Architects.css*/
+.Architects {
+    text-align: center;
+    padding: 20px;
+    position: relative;
+  }
+.Architects  .search-container {
+    text-align: center;
+    margin-top: 202px;
+    background-color: rgba(234, 232, 228, 0.6);
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    margin: 50px auto;
+    display: flex;
+    justify-content: space-between;
+}
+.Architects .search-container input {
+  display: flex;
+  flex: 1;
+  background-color: transparent;
+  padding: 10px;
+  border: 0;
+  width: 100%;
+  outline: none;
+  font-size: 18px;
+}
+.Architects .search-container .search-button {
+  flex: 0.3 1;
+  max-width: 110px;
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  background-color: rgb(54, 52, 54);
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  text-transform: capitalize;
+}
+  .building-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    justify-items: center;
+    padding: 40px 0;
+  }
+  
+  .filter-btn {
+    margin-left: 10px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .filter-btn:hover {
+    background-color: #6a6a6a;
+  }
+  
+  .filter-menu {
+    padding: 10px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    display: none;
+    z-index: 10;
+  }
+  
+  .filter-menu.show {
+    display: block;
+  }
+  
+  .filter-menu button {
+    display: block;
+    margin: 5px 0;
+  }
+
+  .arch_card {
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 320px;
+    /* aspect-ratio: 1 / 1.5; */
+  
+    display: flex;
+    flex-direction: column;
+    border: none;
+  }
+  
+  .arch_card-image-container {
+    width: 100%;
+    height: 300px;
+  }
+  
+  .arch_card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+  
+  .arch_card-content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* لجعل المحتوى يأخذ المساحة المتبقية */
+    text-align: left;
+  }
+  
+  .arch_card h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 10px 0;
+    margin-bottom: 15px;
+    /* text-align: center; */
+    text-transform: capitalize;
+    font-weight: bold;
+  }
+  
+  .arch_card p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+  }
+  .arch_card-button {
+    background-color: #004437;
+    color: #fff;
+    border: none; 
+    padding: 10px 20px;
+    cursor: pointer;
+    align-self: center; 
+    margin-top: auto; 
+    border-radius: 15px;
+    text-decoration: none;
+  }
+  
+  .arch_card-button:hover {
+    background-color: #003326;
+  }
+  
