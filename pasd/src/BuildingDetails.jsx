@@ -224,104 +224,105 @@ function BuildingDetails() {
             </DialogContent>
           </Dialog>
         <div className="details-table-container">
-          <table className="details-table">
-            <tbody>
-              <tr>
-                <th>Architect Name</th>
-                <td>
-                  {foundBuilding.architects?.map((architect) => (
-                    <li key={architect.architect_id?._id}>
-                      {architect.architect_id?.architect_name}
-                    </li>
-                  ))}
-                </td>
-              </tr>
-              <tr>
-                <th>Country</th>
-                <td>{foundBuilding.address_id?.city_id?.country_id?.country_name}</td>
-              </tr>
-              <tr>
-                <th>Location</th>
-                <td>{foundBuilding.address_id?.city_id?.city_name}</td>
-              </tr>
-              <tr>
-                <th>Address</th>
-                <td>{foundBuilding.address_id?.street}</td>
-              </tr>
-              <tr>
-                <th>Date of Construction</th>
-                <td>{foundBuilding.dateOfConstruction}</td>
-              </tr>
-              <tr>
-                <th>Original Use</th>
-                <td>
-                  {foundBuilding.usages?.find((usage) => usage.type === "original")?.usage_id
-                    ?.use_type || ""}
-                </td>
-              </tr>
-              <tr>
-                <th>Current Use</th>
-                <td>
-                  {foundBuilding.usages?.find((usage) => usage.type === "current")?.usage_id
-                    ?.use_type || ""}
-                </td>
-              </tr>
-              <tr>
-                <th>Area (m²)</th>
-                <td>{foundBuilding.area}</td>
-              </tr>
-            </tbody>
-          </table>
-
-          {/* Right Table */}
-          <table className="details-table">
-            <tbody>
-              <tr>
-                <th>Status</th>
-                <td>
-                  {foundBuilding.statuses?.map((status) => (
-                    <li key={status._id}>{status.status_id?.status_name}</li>
-                  ))}
-                </td>
-              </tr>
-              <tr>
-                <th>Building During the Reign</th>
-                <td>{foundBuilding.bdr_id?.bdr_name}</td>
-              </tr>
-              <tr>
-                <th>Documentation Date</th>
-                <td>{foundBuilding.documentationDate}</td>
-              </tr>
-              <tr>
-                <th>Number of Floors</th>
-                <td>{foundBuilding.numberOfFloors}</td>
-              </tr>
-              <tr>
-                <th>Owner's Name</th>
-                <td>
-                  {foundBuilding.owners?.map((owner) => (
-                    <li key={owner._id}>{owner.owner_id?.owner_name}</li>
-                  ))}
-                </td>
-              </tr>
-              <tr>
-                <th>Tenant</th>
-                <td>
-                  {foundBuilding.tenants?.map((tenant) => (
-                    <li key={tenant._id}>{tenant.tenant_id?.tenant_name}</li>
-                  ))}
-                </td>
-              </tr>
-              <tr>
-                <th>Name of Notaries</th>
-                <td>
-                  {foundBuilding.notaries?.map((notary) => (
-                    <li key={notary._id}>{notary.notary_id?.notary_name}</li>
-                  ))}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <h2>Building Information</h2>
+          <div className="details-table-row">
+            <table className="details-table">
+              <tbody>
+                <tr>
+                  <th>Architect Name</th>
+                  <td>
+                    {foundBuilding.architects?.map((architect) => (
+                      <li key={architect.architect_id?._id}>
+                        {architect.architect_id?.architect_name}
+                      </li>
+                    ))}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Country</th>
+                  <td>{foundBuilding.address_id?.city_id?.country_id?.country_name}</td>
+                </tr>
+                <tr>
+                  <th>Location</th>
+                  <td>{foundBuilding.address_id?.city_id?.city_name}</td>
+                </tr>
+                <tr>
+                  <th>Address</th>
+                  <td>{foundBuilding.address_id?.street}</td>
+                </tr>
+                <tr>
+                  <th>Date of Construction</th>
+                  <td>{foundBuilding.dateOfConstruction}</td>
+                </tr>
+                <tr>
+                  <th>Original Use</th>
+                  <td>
+                    {foundBuilding.usages?.find((usage) => usage.type === "original")?.usage_id
+                      ?.use_type || ""}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Current Use</th>
+                  <td>
+                    {foundBuilding.usages?.find((usage) => usage.type === "current")?.usage_id
+                      ?.use_type || ""}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Area (m²)</th>
+                  <td>{foundBuilding.area}</td>
+                </tr>
+              </tbody>
+            </table>
+            <table className="details-table">
+              <tbody>
+                <tr>
+                  <th>Status</th>
+                  <td>
+                    {foundBuilding.statuses?.map((status) => (
+                      <li key={status._id}>{status.status_id?.status_name}</li>
+                    ))}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Building During the Reign</th>
+                  <td>{foundBuilding.bdr_id?.bdr_name}</td>
+                </tr>
+                <tr>
+                  <th>Documentation Date</th>
+                  <td>{foundBuilding.documentationDate}</td>
+                </tr>
+                <tr>
+                  <th>Number of Floors</th>
+                  <td>{foundBuilding.numberOfFloors}</td>
+                </tr>
+                <tr>
+                  <th>Owner's Name</th>
+                  <td>
+                    {foundBuilding.owners?.map((owner) => (
+                      <li key={owner._id}>{owner.owner_id?.owner_name}</li>
+                    ))}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Tenant</th>
+                  <td>
+                    {foundBuilding.tenants?.map((tenant) => (
+                      <li key={tenant._id}>{tenant.tenant_id?.tenant_name}</li>
+                    ))}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Name of Notaries</th>
+                  <td>
+                    {foundBuilding.notaries?.map((notary) => (
+                      <li key={notary._id}>{notary.notary_id?.notary_name}</li>
+                    ))}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           </div>
           {foundBuilding.architects?.length > 0 && (
             <SwiperBuildings architects={foundBuilding?.architects} />

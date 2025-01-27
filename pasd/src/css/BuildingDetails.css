@@ -4,9 +4,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  /* padding: 20px; */
   min-height: 100vh;
-  background-color: #ffffff;
+  background-color: #E5E4E2;
 }
 
 .details-card {
@@ -32,14 +32,10 @@
   margin: 0 auto;
 }
 
-.details-content {
-  padding: 20px;
-}
-
 .details-title {
   font-size: 2rem;
-  margin: 10px 0;
-  color: #ffbf00;
+  margin: 25px 0;
+  color: #000;
   text-align: center;
   font-weight: bold;
   text-transform: capitalize;
@@ -75,14 +71,21 @@
 }
 .details-description {
   font-size: 1.2rem;
-  color: #555;
+  color: #000;
   text-align: justify;
-  max-width: 1000px;
+  max-width: 850px;
   margin: 10px auto;
 }
 .slider_360{
-  padding: 50px 0;
+  padding: 60px 0;
+  background: #596869;
+  color: #fff;
   text-align: center;
+}
+.slider_360 .details-title{
+  margin: 0;
+  color: inherit;
+  margin-bottom: 30px;
 }
 .view_360_div{
   width: 100%;
@@ -104,6 +107,13 @@
   aspect-ratio: 1 / 1;
 }
 .details-table-container {
+  padding: 50px 0;
+  text-align: center;
+}
+.details-table-container h2 {
+  font-weight: bold;
+}
+.details-table-row {
   justify-content: center;
   display: flex;
   flex-wrap: wrap; /* Allows tables to stack on smaller screens */
@@ -117,7 +127,7 @@
 }
 /* Responsive Adjustments for Small Screens */
 @media (max-width: 768px) {
-  .details-table-container {
+  .details-table-row {
     flex-direction: column; /* Stacks tables vertically on smaller screens */
     gap: 1rem;
   }
@@ -130,28 +140,26 @@
   width: 20%; /* Small width for table headers */
   text-align: left; /* Align text to the left for better readability */
   white-space: nowrap; /* Prevents text wrapping in headers */
+  background: #AABA9F;
+  color: #3b3b3b;
+  font-weight: bold;
 }
 
 .details-table td {
   width: 80%; /* Large width for table data */
   text-align: left; /* Align text to the left */
   word-wrap: break-word; /* Allows text to wrap if it's too long */
+  background: #aaba9fba;
 }
 .details-table th,
 .details-table td {
-  border: 1px solid #ddd;
+  border: 1px solid #000000;
   padding: 10px;
   text-align: left;
 }
 .details-table li {
   list-style: none;
 }
-.details-table th {
-  background-color: #f4f4f4;
-  color: #333;
-  font-weight: bold;
-}
-
 .details-buttons {
   display: flex;
   justify-content: center;
@@ -193,7 +201,9 @@
   margin-top: 50px;
 }
 .architects-section {
-  margin-top: 50px;
+  background: #AABA9F;
+  color: #000;
+  padding: 20px;
 }
 .architects-section span {
   font-weight: bold;
