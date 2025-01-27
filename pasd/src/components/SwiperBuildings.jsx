@@ -7,10 +7,7 @@ import '../css/Swiper.css';
 import { useEffect } from 'react';
 
 const SwiperBuildings = ({ architects }) => {
-  useEffect(() => {
-    console.log(architects);
-    
-  }, []);
+
   return (
     <div className="architects-section">
       {architects?.map((architect) =>
