@@ -6,16 +6,15 @@ function Navbar2() {
   const location = useLocation();
 
   return (
-<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+<nav class="navbar2 navbar navbar-expand-lg sticky-top">
   <div class="container-fluid">
-
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link" aria-current="page" href="/">Home</a>
         </li>
         {location.pathname === "/" && (
           <li className="nav-item">
@@ -35,7 +34,7 @@ function Navbar2() {
         </li>
       </ul>
     </div>
-    <button class="btn btn-warning">News</button>
+    <button class="btn">News</button>
   </div>
 </nav>
   );
