@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './css/Main.css';
 import Searchb from './components/Searchb';
-import About from './components/About';
+import About_PASD from './components/About_PASD';
 
 const Main = () => {
   const [backgroundImage, setBackgroundImage] = useState('');
@@ -42,7 +42,7 @@ const Main = () => {
       >
         <Searchb />
       </div>
-      <About />
+      <About_PASD />
     </>
   );
 };
