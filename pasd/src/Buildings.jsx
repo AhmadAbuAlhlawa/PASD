@@ -110,9 +110,13 @@ function Buildings() {
       ) : (
         <>
           <div className="building-grid">
-            {filteredBuildings.map((building) => (
-              <BuildingCard building={building} />
-            ))}
+            {filteredBuildings.length > 0 ? 
+              filteredBuildings.map((building) => (
+                <BuildingCard building={building} />
+              ))
+            :
+            <h2>No buildings found</h2>
+            }
           </div>
           {pagesCount > 1 && /* Render Pagination only if pages count > 1 */
           <div className="d-flex justify-content-center mt-5">
