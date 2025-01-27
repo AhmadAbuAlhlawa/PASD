@@ -326,13 +326,29 @@ app.get('/buildings', async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+// fetch building depend on city
+app.get('/buildings/:city_id', async (req, res) => {
+    const { city_id } = req.params;
+    try {
+        
+        // Find all addresses with the given city_id
+        const addresses = await Addresses_Model.find({ city_id: city_id });
+        const addressIds = addresses.map(address => address._id);
+        
+        const buildings = await Buildings_Model.find({ address_id: { $in: addressIds } }).populate({ path: 'address_id' });
+        res.status(200).json(buildings);
+    } catch (error) {
+        console.error("Error fetching buildings for city:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 // API Endpoint to Fetch Buildings with Architect and City
 app.get('/buildings_frontend', async (req, res) => {
   try {
     // buildings counts 
     const buildings_per_page = 8 // 8 per page
     const page = req.query.page || 1; // number of page, initial is 1 
-    const skip = (page - 1) * buildings_per_page // skip of games when fetch
+    const skip = (page - 1) * buildings_per_page 
     const {title} = req.query;
     let query = {};
     if (title) {
@@ -600,6 +616,68 @@ app.get("/Architects", async (req, res) => {
     try {
         const Architects = await Architects_Model.find(); 
         res.status(200).json(Architects);
+    } catch (error) {
+        console.error("Error fetching Architects:", error); // Debugging
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+// fetch archetict by id
+app.get("/Architects_frontend/:id", async (req, res) => {
+    try {
+        const architect = await Architects_Model.findById(req.params.id).lean();
+        if (!architect) {
+            return res.status(404).json({ message: "Architect not found" });
+        }
+        let buildings_architect = await Buildings_Architects_Model.find({ architect_id: architect._id })
+        .populate('building_id').lean();
+
+        // Fetch front images for related buildings
+        buildings_architect = await Promise.all(
+          buildings_architect.map(async building => {
+            if (!building || !building.building_id) return null;
+
+            const images = await conn.db.collection('images').find({
+              building_id: building.building_id._id.toString(),
+            }).toArray();
+
+            // Find the front image for the building
+            const image = images.find(img => img.building_id === building.building_id._id.toString() && img.Type === 'Front Image');
+            if (image) {
+              building.building_id.image = {
+                image_id: image._id,
+                file_id: image.fileId,
+                filename: image.filename,
+              };
+            }
+            return building.building_id;
+          })
+        )
+        architect.buildings = buildings_architect;
+        
+        res.status(200).json(architect);
+    } catch (error) {
+        console.error("Error fetching Architect:", error); // Debugging
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+// fetch all Architects depend on page or search
+app.get("/Architects_frontend", async (req, res) => {
+    try {
+      // Architects counts 
+      const architects_per_page = 8 // 8 per page
+      const page = req.query.page || 1; // number of page, initial is 1 
+      const skip = (page - 1) * architects_per_page 
+      const {title} = req.query;
+      let query = {};
+      if (title) {
+          const architect_name = title;    
+          const regex = new RegExp(architect_name, "i");
+          query.architect_name = regex;
+      }
+      const ArchitectsCount = await Architects_Model.countDocuments(query);
+      const Counts_of_Pages = Math.ceil(ArchitectsCount / architects_per_page) // Round up to nearest integer
+        const Architects = await Architects_Model.find(query).skip(skip).limit(architects_per_page);
+        res.status(200).json({Architects, Counts_of_Pages });
     } catch (error) {
         console.error("Error fetching Architects:", error); // Debugging
         res.status(500).json({ error: "Internal Server Error" });

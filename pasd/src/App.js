@@ -8,6 +8,9 @@ import BuildingDetails from './BuildingDetails';
 import AboutUs from './AboutUs';
 import Main from "./Main";
 import Footer from './components/Footer';
+import Cities from './Cities';
+import Architects from './Architects';
+import ArchitectDetails from './ArchitectDetails';
 
 function App() {
   return (
@@ -20,9 +23,11 @@ function App() {
             <Routes>
               <Route path="/" element={<Main />} />
               <Route path="/Buildings" exact element={<Buildings />} />
+              <Route path="/Architects" exact element={<Architects />} />
               <Route path="/about-us" element={ <AboutUs />} />
               <Route path="/Buildings/:id" element={<BuildingDetails />} />
-              <Route path="/Cities" element={"cities element"} />
+              <Route path="/Architects/:id" element={<ArchitectDetails />} />
+              <Route path="/Cities" element={<Cities />} />
             </Routes>
           </div>
           
