@@ -342,6 +342,16 @@ app.get('/buildings/:city_id', async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+// get last 6 logs
+app.get('/newest_logs', async (req, res) => {
+    try {
+        const logs = await Log.find().sort({ timestamp: -1 }).limit(6);
+        res.status(200).json(logs);
+    } catch (error) {
+        console.error("Error fetching logs:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 // API Endpoint to Fetch Buildings with Architect and City
 app.get('/buildings_frontend', async (req, res) => {
   try {
