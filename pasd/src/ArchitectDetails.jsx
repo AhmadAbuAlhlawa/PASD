@@ -68,15 +68,12 @@ const ArchitectDetails = () => {
                 <div className="arch_data">
                     <div className="arch_image">
                         {foundArchitect.filename ? (
-                            <>
-                                <img
-                                    src={`${foundArchitect.filename}`}
-                                    alt="Architect"
-                                    onClick={() => handleOpen(foundArchitect.filename)}
-                                    className="clickable-image"
-                                />
-                                <p>*Click on image for full view</p>
-                            </>
+                            <img
+                                src={`${foundArchitect.filename}`}
+                                alt="Architect"
+                                onClick={() => handleOpen(foundArchitect.filename)}
+                                className="clickable-image"
+                            />
                         ) : (
                             <img
                                 src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
@@ -95,7 +92,6 @@ const ArchitectDetails = () => {
                     <h3 className="mb-4">No buildings found for this architect</h3>
                     : 
                     <div>
-                        <h2>{foundArchitect.buildings.length} building/s</h2>
                         <div>
                             <SwiperBuildingsArchPage buildings={foundArchitect.buildings} />
                         </div>
