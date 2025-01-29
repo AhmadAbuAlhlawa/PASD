@@ -342,6 +342,59 @@ app.get('/buildings/:city_id', async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+// general search
+  app.get('/search', async (req, res) => {
+    try {
+      // users
+      const {q} = req.query
+      if(!q || q.length < 1) res.send({ message: "Please enter a search query." });
+
+        // Find all addresses, buildings, and cities that match the search query
+        const buildings = await Buildings_Model.find({ building_name: { $regex: new RegExp(q.trim(), "i") }}).limit(10).select('building_name');
+        const cities = await Cities_Model.find({ city_name: { $regex: new RegExp(q.trim(), "i") }}).limit(10).select('city_name');
+        const archeticts = await Architects_Model.find({ architect_name: { $regex: new RegExp(q.trim(), "i") }}).limit(10).select('architect_name');
+        // Combine all results into a single array
+        let results = [];
+        for(let i = 0; i < buildings.length; i++) {
+          results.push({ 
+            type: "building",
+            _id: buildings[i]._id,
+            title: buildings[i].building_name,
+           });
+        }
+        for(let i = 0; i < cities.length; i++) {
+          results.push({ 
+            type: "city",
+            _id: cities[i]._id,
+            title: cities[i].city_name,
+           });
+        }
+        for(let i = 0; i < archeticts.length; i++) {
+          results.push({ 
+            type: "architect",
+            _id: archeticts[i]._id,
+            title: archeticts[i].architect_name,
+           });
+        }
+      // sort data (games and users) by title
+      results.sort((a, b) => {
+        const titleA = a.title.toUpperCase();
+        const titleB = b.title.toUpperCase();
+      
+        if (titleA > titleB) {
+          return 1; // Change the order here
+        }
+        if (titleA < titleB) {
+          return -1; // Change the order here
+        }
+        return 0;
+      });
+        res.status(200).json(results);
+    } catch (error) {
+        console.error("Error searching:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 // get last 6 logs
 app.get('/newest_logs', async (req, res) => {
     try {

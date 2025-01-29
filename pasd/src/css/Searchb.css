@@ -44,4 +44,21 @@
     width: 100%;
   }
   .search-bar::placeholder {
-    color: black; /* Placeholder text color */}
+    color: black; /* Placeholder text color */
+  }
+  .search-results{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+    max-height: 250px;
+    overflow-y: auto;
+    list-style: none;
+  }
+  .search-results li a {
+    color: black;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease;
+  }
