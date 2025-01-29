@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import Cities from './Cities';
 import Architects from './Architects';
 import ArchitectDetails from './ArchitectDetails';
+import Support from './Support';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Main />} />
               <Route path="/Buildings" exact element={<Buildings />} />
+              <Route path="/support-us" exact element={<Support />} />
               <Route path="/Architects" exact element={<Architects />} />
               <Route path="/about-us" element={ <AboutUs />} />
               <Route path="/Buildings/:id" element={<BuildingDetails />} />
