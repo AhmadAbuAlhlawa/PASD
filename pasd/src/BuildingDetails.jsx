@@ -59,48 +59,16 @@ function BuildingDetails() {
       :
       <div className="details-card">
         <h1 className="details-title">{foundBuilding.building_name}</h1>
-        <div className="details-image-container">
-          {foundBuilding.images?.length > 0 ? (
-            foundBuilding.images.find((image) => image.type === "Front Image") ? (
-              <img
-                src={
-                  foundBuilding.images.find(
-                    (image) => image.type === "Front Image"
-                  ).filename
-                }
-                alt={`${foundBuilding.building_name} Front Image`}
-                className="details-image"
-              />
-            ) : (
-              <img
-                src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
-                alt="No Front Image Available"
-                className="details-image"
-              />
-            )
-          ) : (
-            <img
-              src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
-              alt="No Image Available"
-              className="details-image"
-            />
-          )}
-        </div>
         <div className="details-content">
           <p className="details-description">{foundBuilding.about}</p>
 
           {/* Gallery Section */}
           <div className="hero_section hero_section_1">
-          {foundBuilding.images?.filter((image) => image.type !== "Front Image").length > 0 && 
-            <h4>For full view, click on the photo</h4>
-          }
             <div id="buildingCarousel" className="carousel slide" data-bs-ride="carousel">
-              {foundBuilding.images?.filter((image) => image.type !== "Front Image").length > 0 ? (
+              {foundBuilding.images?.length > 0 ? (
                 <>
                   <div className="carousel-indicators">
-                    {foundBuilding.images
-                      .filter((image) => image.type !== "Front Image")
-                      .map((image, index) => (
+                    {foundBuilding.images.map((image, index) => (
                         <button
                           key={index}
                           type="button"
@@ -113,9 +81,7 @@ function BuildingDetails() {
                       ))}
                   </div>
                   <div className="carousel-inner">
-                    {foundBuilding.images
-                      .filter((image) => image.type !== "Front Image")
-                      .map((image, index) => (
+                    {foundBuilding.images.map((image, index) => (
                         <div
                           key={index}
                           className={`carousel-item ${index === 0 ? "active" : ""}`}
