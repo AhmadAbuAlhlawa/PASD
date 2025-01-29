@@ -7,6 +7,16 @@ const Cities = () => {
     const [selectedCity, setSelectedCity] = React.useState(null);
     const [buildings, setBuildings] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
+    
+    const cityId = new URLSearchParams(window.location.search).get('city_id');
+    // make cityId selectedCity if it's on cities
+    useEffect(() => {
+        if (cityId) {
+            const selectedCity = cities.find(city => city.value === cityId);
+            setSelectedCity(selectedCity);
+        }
+    }, [cities, cityId]);
+
     // Fetch cities data from API
     useEffect(() => {
         fetch('http://localhost:5000/get-cities')
