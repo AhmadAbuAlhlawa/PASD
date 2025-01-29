@@ -1,6 +1,5 @@
 .footer_container{
-    padding-top: 120px;
-    padding-bottom: 60px;
+    padding: 30px 0;
     background-color: #2e2e2e;
     color: #fff;
 }
@@ -21,7 +20,7 @@
     padding-bottom: 40px;
     gap: 50px;
 }
-.footer_row .logo img {
+.logo img {
     filter: invert(1);
     width: 100%;
     max-width: 100px;
