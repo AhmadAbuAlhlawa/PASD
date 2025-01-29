@@ -1,5 +1,5 @@
 .navbar2 {
-  background: #272727;
+  background: #32303C;
   color: #fff !important;
 }
 .navbar2 a {
@@ -10,18 +10,18 @@
   color: #fff !important;
 }
 .navbar2 button {
-  background: #004437;
+  background: #7A5D8D;
   border: 0;
   color: #fff;
 }
 .navbar2 button:hover {
-  background: #003326;
+  background: #69507a;
 }
 .navbar2 .dropdown-menu{
-  background: #272727;
+  background: #32303C;
 }
 .dropdown-item:focus, .dropdown-item:hover{
-  background: #004437;
+  background: #7A5D8D;
 }
 /* news */
 .news_container{

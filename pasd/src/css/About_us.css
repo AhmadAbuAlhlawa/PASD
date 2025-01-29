@@ -1,6 +1,6 @@
 .about_us {
     /* padding: 20px; */
-    background: #aaba9fba;
+    background: #E1DBE5;
 }
 .about_us_container{
     max-width: 1600px;
@@ -17,6 +17,7 @@
     font-size: 25px;
     margin-bottom: 0;
     text-align: justify;
+    max-width: 1200px;
 }
 .about_us_container img { 
     width: 100%;

@@ -16,3 +16,14 @@
     padding: 1rem 0;
     padding-bottom: 50px;
 }
+.swiper-button-prev, .swiper-button-next{
+  color: #6a6a6a;
+  border: none;
+}
+.swiper-pagination-bullet{
+  background-color: #6a6a6a;
+  border: none;
+}
+.swiper-pagination-clickable .swiper-pagination-bullet{
+  border-radius: 0;
+}
