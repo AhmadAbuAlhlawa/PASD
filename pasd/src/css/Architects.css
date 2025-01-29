@@ -32,13 +32,16 @@
   padding: 10px 20px;
   margin-left: 10px;
   border: none;
-  background-color: rgb(54, 52, 54);
+  background-color: #32303C;
   color: white;
   border-radius: 10px;
   cursor: pointer;
   text-align: center;
   width: 100%;
   text-transform: capitalize;
+}
+.Architects .search-container .search-button:hover{
+  background-color: #282730;
 }
   .building-grid {
     display: grid;
@@ -48,19 +51,6 @@
     padding: 40px 0;
   }
   
-  .filter-btn {
-    margin-left: 10px;
-    background-color: #000000;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .filter-btn:hover {
-    background-color: #6a6a6a;
-  }
   
   .filter-menu {
     padding: 10px;
@@ -74,14 +64,18 @@
     z-index: 10;
   }
   
-  .filter-menu.show {
-    display: block;
-  }
+.filter-menu.show {
+    display: block; 
+    padding: 20xp; 
+    right: 460px;
+    top: 120px;
+}
   
-  .filter-menu button {
+.filter-menu button {
     display: block;
     margin: 5px 0;
-  }
+    color:#000000;
+}
 
   .arch_card {
     background-color: #ffffff;
@@ -133,7 +127,7 @@
     -webkit-box-orient: vertical;
   }
   .arch_card-button {
-    background-color: #004437;
+    background-color: #32303C;
     color: #fff;
     border: none; 
     padding: 10px 20px;
@@ -145,6 +139,6 @@
   }
   
   .arch_card-button:hover {
-    background-color: #003326;
+    background-color: #282730;
   }
   

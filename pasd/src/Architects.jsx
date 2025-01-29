@@ -50,7 +50,6 @@ const Architects = () => {
         setFoundArchitects(json.Architects || []); // Handle empty response
         setFilteredArchitects(json.Architects || []); // Handle empty response
         setLoading(false);
-        setSorted(false); // Reset sorting state when changing page
       })
       .catch((err) => {
         if (err.name === "AbortError") {
@@ -84,7 +83,7 @@ const Architects = () => {
         let sortedArchitects = [...filteredArchitects];
 
         if (option === "alphabetical") {
-            sortedArchitects.sort((a, b) => a.architect_name.localeCompare(b.architect_name));
+          setSorted(true);
         }
 
         setFilteredArchitects(sortedArchitects);
@@ -104,7 +103,7 @@ const Architects = () => {
       </div>
       {filterMenuVisible && (
         <div className="filter-menu show">
-          <Button onClick={() => applyFilter("alphabetical")}>ترتيب أبجدي</Button>
+          <Button onClick={() => applyFilter("alphabetical")}>Alphabetical order</Button>
         </div>
       )}
       {loading? (
