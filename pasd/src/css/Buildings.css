@@ -32,13 +32,16 @@
   padding: 10px 20px;
   margin-left: 10px;
   border: none;
-  background-color: rgb(54, 52, 54);
+  background-color: #32303C; 
   color: white;
   border-radius: 10px;
   cursor: pointer;
   text-align: center;
   width: 100%;
   text-transform: capitalize;
+}
+.Buildings .search-container .search-button:hover {
+  background-color: #282730;
 }
   .building-grid {
     display: grid;

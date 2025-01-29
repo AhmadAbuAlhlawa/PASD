@@ -105,7 +105,7 @@ function Buildings() {
       </div>
       {filterMenuVisible && (
         <div className="filter-menu show">
-          <Button onClick={() => applyFilter("alphabetical")}>ترتيب أبجدي</Button>
+          <Button onClick={() => applyFilter("alphabetical")}>Alphabetical order</Button>
         </div>
       )}
 
