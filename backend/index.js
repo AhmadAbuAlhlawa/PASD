@@ -412,22 +412,21 @@ app.get('/buildings_frontend', async (req, res) => {
     const buildings_per_page = 8 // 8 per page
     const page = req.query.page || 1; // number of page, initial is 1 
     const skip = (page - 1) * buildings_per_page 
-    const {title} = req.query;
+    const {title, sorted} = req.query;
     let query = {};
     if (title) {
         const building_name = title;    
         const regex = new RegExp(building_name, "i");
         query.building_name = regex;
     }
-
+    
     // Fetch all buildings with their addresses and cities
-    let buildings = await Buildings_Model.find(query).limit(buildings_per_page).lean().limit(buildings_per_page).skip(skip)
-    .populate({
-      path: 'address_id',
-      populate: { 
-        path: 'city_id',
-      },
-    });
+    let buildings;
+    if(sorted == "true"){
+      buildings = await Buildings_Model.find(query).limit(buildings_per_page).lean().limit(buildings_per_page).skip(skip).sort({building_name: 1})
+    }else{
+      buildings = await Buildings_Model.find(query).limit(buildings_per_page).lean().limit(buildings_per_page).skip(skip)
+    }
     const buildingsCount = await Buildings_Model.countDocuments(query);
     const Counts_of_Pages = Math.ceil(buildingsCount / buildings_per_page) // Round up to nearest integer
 
@@ -730,17 +729,22 @@ app.get("/Architects_frontend", async (req, res) => {
       const architects_per_page = 8 // 8 per page
       const page = req.query.page || 1; // number of page, initial is 1 
       const skip = (page - 1) * architects_per_page 
-      const {title} = req.query;
+      const {title, sorted} = req.query;
       let query = {};
       if (title) {
           const architect_name = title;    
           const regex = new RegExp(architect_name, "i");
           query.architect_name = regex;
       }
+      let Architects;
+      if(sorted == "true"){
+        Architects = await Architects_Model.find(query).skip(skip).limit(architects_per_page).sort({architect_name: 1});
+      }else{
+        Architects = await Architects_Model.find(query).skip(skip).limit(architects_per_page);
+      }
       const ArchitectsCount = await Architects_Model.countDocuments(query);
       const Counts_of_Pages = Math.ceil(ArchitectsCount / architects_per_page) // Round up to nearest integer
-        const Architects = await Architects_Model.find(query).skip(skip).limit(architects_per_page);
-        res.status(200).json({Architects, Counts_of_Pages });
+      res.status(200).json({Architects, Counts_of_Pages });
     } catch (error) {
         console.error("Error fetching Architects:", error); // Debugging
         res.status(500).json({ error: "Internal Server Error" });

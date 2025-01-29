@@ -18,6 +18,7 @@ const Architects = () => {
     const [pagesCount, setPagesCount] = useState(0);
     const [foundArchitects, setFoundArchitects] = useState([]); 
     const [filteredArchitects, setFilteredArchitects] = useState([]); 
+    const [sorted, setSorted] = useState(false);
 
     // Debouncing logic for the search input
     useEffect(() => {
@@ -28,14 +29,14 @@ const Architects = () => {
       return () => clearTimeout(timer); // Clear timeout on cleanup
     }, [search]);
 
-
+  // const get 
   useEffect(() => {
     const controller = new AbortController(); // Create AbortController for request cancellation
     const signal = controller.signal;
   
     setLoading(true);
   
-    fetch(`http://localhost:5000/Architects_frontend?page=${page}&title=${debouncedSearch}`, { signal })
+    fetch(`http://localhost:5000/Architects_frontend?page=${page}&title=${debouncedSearch}&sorted=${sorted}`, { signal })
       .then((res) => {
         if (!res.ok) {
           throw new Error("Request failed");
@@ -49,6 +50,7 @@ const Architects = () => {
         setFoundArchitects(json.Architects || []); // Handle empty response
         setFilteredArchitects(json.Architects || []); // Handle empty response
         setLoading(false);
+        setSorted(false); // Reset sorting state when changing page
       })
       .catch((err) => {
         if (err.name === "AbortError") {
@@ -60,7 +62,7 @@ const Architects = () => {
       });
   
     return () => controller.abort(); // Abort previous request when effect is re-run
-  }, [page, debouncedSearch]);
+  }, [page, sorted, debouncedSearch]);
 
     // Handle page change
     const handlePageChange = (e, value) => {

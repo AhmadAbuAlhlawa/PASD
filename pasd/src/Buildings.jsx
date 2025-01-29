@@ -18,7 +18,8 @@ function Buildings() {
   const [pagesCount, setPagesCount] = useState(0);
   const [foundBuildings, setFoundBuildings] = useState([]); 
   const [filteredBuildings, setFilteredBuildings] = useState([]); 
-  
+  const [sorted, setSorted] = useState(false);
+
   // Debouncing logic for the search input
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -26,15 +27,18 @@ function Buildings() {
     }, 300); // Delay of 300ms
 
     return () => clearTimeout(timer); // Clear timeout on cleanup
-  }, [search]);
+  }, [search, sorted]);
 
+  const getBuildings = () => {
+  
+  }
   useEffect(() => {
     const controller = new AbortController(); // Create AbortController for request cancellation
     const signal = controller.signal;
   
     setLoading(true);
   
-    fetch(`http://localhost:5000/buildings_frontend?page=${page}&title=${debouncedSearch}`, { signal })
+    fetch(`http://localhost:5000/buildings_frontend?page=${page}&title=${debouncedSearch}&sorted=${sorted}`, { signal })
       .then((res) => {
         if (!res.ok) {
           throw new Error("Request failed");
@@ -59,7 +63,7 @@ function Buildings() {
       });
   
     return () => controller.abort(); // Abort previous request when effect is re-run
-  }, [page, debouncedSearch]);
+  }, [page, sorted, debouncedSearch]);
 
   // Handle page change
   const handlePageChange = (e, value) => {
@@ -81,7 +85,7 @@ function Buildings() {
     let sortedBuildings = [...filteredBuildings];
 
     if (option === "alphabetical") {
-      sortedBuildings.sort((a, b) => a.building_name.localeCompare(b.building_name));
+      setSorted(true);
     }
 
     setFilteredBuildings(sortedBuildings);
