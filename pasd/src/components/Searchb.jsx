@@ -16,7 +16,14 @@ const Searchb = () => {
       .catch(error => console.error(error));
     }
   };
-
+  const handleSearchChange = (e) => {
+    setQuery(e.target.value);
+    if(e.target.value.trim() === "") {
+      setResults("");
+      setData([]);
+      
+    }
+  }
   return (
     <div className="search-container">
       <div className="search-wrapper">
@@ -24,15 +31,14 @@ const Searchb = () => {
           type="text"
           placeholder="Search here..."
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={handleSearchChange}
           className="search-input"
-          
         />
         <button onClick={handleSearch} className="search-button">Search</button>
       </div>
       <div>{results && <p>{results}</p>}</div>
       <div>
-        {data.length > 0 && (
+        {query.length > 0 && data.length > 0 && (
           <ul className="search-results">
             {data.map((item, index) => {
               let link = "#"; // Default link
@@ -47,13 +53,15 @@ const Searchb = () => {
               }
 
               return (
-                <li key={index}>
-                  <a href={link}>
-                    Type: {item.type},
-                    <br />
-                    Title: {item.title}
-                  </a>
-                </li>
+                <>
+                  <li key={index}>
+                    <a href={link}>
+                      Type: {item.type},
+                      <br />
+                      Title: {item.title}
+                    </a>
+                  </li>
+                </>
               );
             })}
           </ul>
