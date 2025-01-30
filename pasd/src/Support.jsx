@@ -8,8 +8,9 @@ import {
   Button,
   Typography,
   Box,
+  CircularProgress,
 } from "@mui/material";
-import emailjs from "@emailjs/browser"; // Import EmailJS
+import emailjs from "@emailjs/browser";
 
 const Support = () => {
   const [formData, setFormData] = useState({
@@ -21,18 +22,16 @@ const Support = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  // Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     let newErrors = {};
 
-    // Validation
     if (!formData.fullName) newErrors.fullName = "Full Name is required";
     if (!formData.email) newErrors.email = "Email is required";
     if (!formData.phone) newErrors.phone = "Phone number is required";
@@ -43,8 +42,8 @@ const Support = () => {
       setErrors(newErrors);
     } else {
       setErrors({});
+      setLoading(true);
 
-      // EmailJS Configuration
       const emailParams = {
         from_name: formData.fullName,
         from_email: formData.email,
@@ -54,21 +53,17 @@ const Support = () => {
       };
 
       emailjs
-        .send(
-          "service_s1vonuf", // Replace with your EmailJS Service ID
-          "template_wwd97wa", // Replace with your EmailJS Template ID
-          emailParams,
-          "z0qg8nLJZ6eSKIy9w" // Replace with your EmailJS Public Key
-        )
+        .send("service_r7j83ad", "template_e4m0ybf", emailParams, "fxw-xExk1F2kzPdEF")
         .then((response) => {
           console.log("Email sent successfully!", response.status, response.text);
           alert("Support request sent successfully!");
-          setFormData({ fullName: "", email: "", phone: "", supportType: "", message: "" }); // Reset form
+          setFormData({ fullName: "", email: "", phone: "", supportType: "", message: "" });
         })
         .catch((error) => {
           console.error("Email failed to send:", error);
           alert("Failed to send the request. Please try again.");
-        });
+        })
+        .finally(() => setLoading(false));
     }
   };
 
@@ -97,12 +92,6 @@ const Support = () => {
           error={!!errors.fullName}
           helperText={errors.fullName}
           margin="normal"
-          sx={{
-            "& label.Mui-focused": { color: "black" }, // Label color on focus
-            "& .MuiOutlinedInput-root": {
-            "&.Mui-focused fieldset": { borderColor: "black" }, // Black outline on focus
-            },
-        }}
         />
         <TextField
           fullWidth
@@ -113,12 +102,6 @@ const Support = () => {
           error={!!errors.email}
           helperText={errors.email}
           margin="normal"
-          sx={{
-            "& label.Mui-focused": { color: "black" }, // Label color on focus
-            "& .MuiOutlinedInput-root": {
-            "&.Mui-focused fieldset": { borderColor: "black" }, // Black outline on focus
-            },
-        }}
         />
         <TextField
           fullWidth
@@ -129,31 +112,18 @@ const Support = () => {
           error={!!errors.phone}
           helperText={errors.phone}
           margin="normal"
-          sx={{
-            "& label.Mui-focused": { color: "black" }, // Label color on focus
-            "& .MuiOutlinedInput-root": {
-            "&.Mui-focused fieldset": { borderColor: "black" }, // Black outline on focus
-            },
-        }}
         />
-        <FormControl fullWidth margin="normal" sx={{
-            "& label.Mui-focused": { color: "black" }, // Label color on focus
-            "& .MuiOutlinedInput-root": {
-                "&.Mui-focused fieldset": { borderColor: "black" }, // Black border on focus
-            }
-        }}>
+        <FormControl fullWidth margin="normal">
           <InputLabel>Support Type</InputLabel>
-            <Select
-                labelId="demo-simple-select-label"
-                label="Support Type"
-                id="demo-simple-select"
-                name="supportType"
-                value={formData.supportType}
-                onChange={handleChange}
-            >
-                <MenuItem value=""><em>None</em></MenuItem>
-                <MenuItem value="Archive support">Support with Us Archive</MenuItem>
-                <MenuItem value="Financial support">Support Us Financially</MenuItem>
+          <Select
+            label="Support Type"
+            name="supportType"
+            value={formData.supportType}
+            onChange={handleChange}
+          >
+            <MenuItem value=""><em>None</em></MenuItem>
+            <MenuItem value="Archive support">Support with Us Archive</MenuItem>
+            <MenuItem value="Financial support">Support Us Financially</MenuItem>
           </Select>
         </FormControl>
         {errors.supportType && (
@@ -172,15 +142,9 @@ const Support = () => {
           margin="normal"
           multiline
           rows={4}
-          sx={{
-            "& label.Mui-focused": { color: "black" }, // Label color on focus
-            "& .MuiOutlinedInput-root": {
-            "&.Mui-focused fieldset": { borderColor: "black" }, // Black outline on focus
-            },
-        }}
         />
-        <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2, background: '#000' }}>
-          Submit
+        <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2, background: '#000' }} disabled={loading}>
+          {loading ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Submit"}
         </Button>
       </form>
     </Box>
