@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import emailjs from "@emailjs/browser";
 
+import "./css/Support.css";
+
 const Support = () => {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -69,6 +71,7 @@ const Support = () => {
 
   return (
     <Box
+      className="support-form"
       sx={{
         maxWidth: 500,
         mx: "auto",
@@ -76,10 +79,9 @@ const Support = () => {
         p: 3,
         boxShadow: 3,
         borderRadius: 2,
-        bgcolor: "background.paper",
       }}
     >
-      <Typography variant="h5" sx={{ mb: 3, textAlign: "center", fontWeight: "bold" }}>
+      <Typography className="heading" variant="h5" sx={{ mb: 3, textAlign: "center", fontWeight: "bold" }}>
         Support Form
       </Typography>
       <form onSubmit={handleSubmit}>
@@ -95,11 +97,11 @@ const Support = () => {
           sx={{
             "& .MuiOutlinedInput-root": {
               "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "black",
+                borderColor: "#004437",
               },
             },
             "& .MuiInputLabel-root": {
-              color: "black !important",
+              color: "#004437 !important",
             },
           }}
         />
@@ -115,11 +117,11 @@ const Support = () => {
           sx={{
             "& .MuiOutlinedInput-root": {
               "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "black",
+                borderColor: "#004437",
               },
             },
             "& .MuiInputLabel-root": {
-              color: "black !important",
+              color: "#004437 !important",
             },
           }}
         />
@@ -135,22 +137,22 @@ const Support = () => {
           sx={{
             "& .MuiOutlinedInput-root": {
               "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "black",
+                borderColor: "#004437",
               },
             },
             "& .MuiInputLabel-root": {
-              color: "black !important",
+              color: "#004437 !important",
             },
           }}
         />
         <FormControl fullWidth margin="normal" sx={{
           "& .MuiOutlinedInput-root": {
             "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-              borderColor: "black",
+              borderColor: "#004437",
             },
           },
           "& .MuiInputLabel-root": {
-            color: "black !important",
+            color: "#004437 !important",
           },
         }}>
           <InputLabel>Support Type</InputLabel>
@@ -184,15 +186,15 @@ const Support = () => {
           sx={{
             "& .MuiOutlinedInput-root": {
               "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "black",
+                borderColor: "#004437",
               },
             },
             "& .MuiInputLabel-root": {
-              color: "black !important",
+              color: "#004437 !important",
             },
           }}
         />
-        <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2, background: '#000' }} disabled={loading}>
+        <Button type="submit" className="support_button" variant="contained" fullWidth sx={{ mt: 2 }} disabled={loading}>
           {loading ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Submit"}
         </Button>
       </form>
