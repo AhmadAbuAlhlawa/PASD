@@ -6,13 +6,13 @@
   }
 .Buildings  .search-container {
     text-align: center;
-    margin-top: 202px;
     background-color: rgba(234, 232, 228, 0.6);
     border: 2px solid #ccc;
     border-radius: 10px;
     width: 90%;
     max-width: 600px;
-    margin: 50px auto;
+    margin: 40px auto;
+    margin-top: 60px;
     display: flex;
     justify-content: space-between;
 }
@@ -32,7 +32,7 @@
   padding: 10px 20px;
   margin-left: 10px;
   border: none;
-  background-color: #32303C; 
+  background-color: #272727; 
   color: white;
   border-radius: 10px;
   cursor: pointer;
@@ -41,7 +41,7 @@
   text-transform: capitalize;
 }
 .Buildings .search-container .search-button:hover {
-  background-color: #282730;
+  background-color: rgb(32, 31, 38);
 }
   .building-grid {
     display: grid;
