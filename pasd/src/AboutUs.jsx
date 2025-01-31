@@ -27,12 +27,13 @@ const AboutUs = () => {
     { name: 'Sandy Jaafreh', image: 'Sandy Fareed Jaafreh.jpg' },
     { name: 'Yazed rabhh', image: 'YAZED MOHAMED ABED RABHH.jpg' },
     { name: 'Yqoub halabea', image: 'Yqoub halabea.jpg' },
-
+  ];
+  const software_team = [
     { name: 'Masa Aljayyousi', image: 'Masa Aljayyousi.jpg' },
     { name: 'Ahmad Abu Al-Hlawa', image: 'Ahmad Abu Al-Hlawa.png' },
     { name: 'Alaa Abdalqader', image: 'Alaa Abdalqader.jpg' },
     { name: 'Huthayfa Shaheen', image: 'Huthayfa Shaheen.jpg' },
-  ];
+  ]
 
   return (
     <div className='about_us'>
@@ -46,6 +47,17 @@ const AboutUs = () => {
                 <p className='team_name'>{member.name}</p>
               </div>
             ))}
+          </div>
+          <div className='software_team'>
+            <h2>Software Developer</h2>
+            <div className='team_members'>
+              {software_team.map((member, index) => (
+                <div key={index} className='team_member'>
+                  <div className='w-100'><img loading='lazy' src={`/imge/team_images/${member.image}`} alt={member.name} className='team_image' /></div>
+                  <p className='team_name'>{member.name}</p>
+                </div>
+              ))}
+              </div>
           </div>
         </div>
         <div className='data'>
