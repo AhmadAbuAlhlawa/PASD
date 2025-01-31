@@ -58,7 +58,7 @@ const Cities = () => {
 
     return (
         <div className='cities_maps'>
-            <div className='input'>
+            <div className='input p-4'>
                 <h4>Select a City</h4>
                 <Select
                     options={cities} 
@@ -70,16 +70,16 @@ const Cities = () => {
             </div>
             <div className='city'>
                 {selectedCity == null ? 
-                <h2>Choose a city to display map...</h2>
+                <h2 className='px-4'>Choose a city to display map...</h2>
                 :
                 buildings.length > 0 ?
                 loading ?
-                <h2>Loading...</h2> :
+                <h2 className='px-4'>Loading...</h2> :
                 <>
                 <MapComponent buildings={buildings} /> 
                 </>
                 :
-                <h2>No buildings found for this city.</h2>
+                <h2 className='px-4'>No buildings found for this city.</h2>
                 }
             </div>
         </div>
