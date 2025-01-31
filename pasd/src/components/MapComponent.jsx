@@ -6,8 +6,14 @@ import L from "leaflet";
 const { BaseLayer } = LayersControl;
 
 const MapComponent = ({ buildings }) => {
+  const lastBuilding = buildings[buildings.length - 1];
+  console.log(lastBuilding);
+  
+  const lastBuildingCoordinates = lastBuilding?.address?.coordinates;
+  console.log(lastBuildingCoordinates);
+  
   return (
-    <MapContainer center={[31.7054, 35.2024]} zoom={12} style={{ height: "600px", width: "100%" }}>
+    <MapContainer center={[lastBuildingCoordinates[0], lastBuildingCoordinates[1]]} zoom={13} style={{ height: "600px", width: "100%" }}>
       <LayersControl position="topright">
         <BaseLayer checked name="Transparent Map">
             <TileLayer
