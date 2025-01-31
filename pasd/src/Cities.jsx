@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Select from 'react-select';
 import './css/Cities.css';
+import MapComponent from './components/MapComponent';
 
 const Cities = () => {
     const [cities, setCities] = React.useState([]);
@@ -72,16 +73,11 @@ const Cities = () => {
                 <h2>Choose a city to display map...</h2>
                 :
                 buildings.length > 0 ?
-                loading ? <h2>Loading...</h2> :
-                buildings.map(building => (
-                    <div key={building._id} className='building'>
-                        <h3>{building.building_name}</h3>
-                        <div>
-                            <p>{building.address_id?.coordinates[0]}</p>
-                            <p>{building.address_id?.coordinates[1]}</p>
-                        </div>
-                    </div>
-                ))
+                loading ?
+                <h2>Loading...</h2> :
+                <>
+                <MapComponent buildings={buildings} /> 
+                </>
                 :
                 <h2>No buildings found for this city.</h2>
                 }
