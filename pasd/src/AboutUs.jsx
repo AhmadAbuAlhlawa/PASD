@@ -49,7 +49,7 @@ const AboutUs = () => {
             ))}
           </div>
           <div className='software_team'>
-            <h2>Software Developer</h2>
+            <h2 className='m-0 mt-4'>Software Developers</h2>
             <div className='team_members'>
               {software_team.map((member, index) => (
                 <div key={index} className='team_member'>
