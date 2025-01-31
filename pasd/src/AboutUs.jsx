@@ -42,7 +42,7 @@ const AboutUs = () => {
           <div className='team_members'>
             {team.map((member, index) => (
               <div key={index} className='team_member'>
-                <div className='w-100'><img src={`/imge/team_images/${member.image}`} alt={member.name} className='team_image' /></div>
+                <div className='w-100'><img loading='lazy' src={`/imge/team_images/${member.image}`} alt={member.name} className='team_image' /></div>
                 <p className='team_name'>{member.name}</p>
               </div>
             ))}
