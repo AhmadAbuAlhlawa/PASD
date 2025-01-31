@@ -92,6 +92,16 @@ const Support = () => {
           error={!!errors.fullName}
           helperText={errors.fullName}
           margin="normal"
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "black",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              color: "black !important",
+            },
+          }}
         />
         <TextField
           fullWidth
@@ -102,6 +112,16 @@ const Support = () => {
           error={!!errors.email}
           helperText={errors.email}
           margin="normal"
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "black",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              color: "black !important",
+            },
+          }}
         />
         <TextField
           fullWidth
@@ -112,8 +132,27 @@ const Support = () => {
           error={!!errors.phone}
           helperText={errors.phone}
           margin="normal"
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "black",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              color: "black !important",
+            },
+          }}
         />
-        <FormControl fullWidth margin="normal">
+        <FormControl fullWidth margin="normal" sx={{
+          "& .MuiOutlinedInput-root": {
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: "black",
+            },
+          },
+          "& .MuiInputLabel-root": {
+            color: "black !important",
+          },
+        }}>
           <InputLabel>Support Type</InputLabel>
           <Select
             label="Support Type"
@@ -142,6 +181,16 @@ const Support = () => {
           margin="normal"
           multiline
           rows={4}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "black",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              color: "black !important",
+            },
+          }}
         />
         <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2, background: '#000' }} disabled={loading}>
           {loading ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Submit"}
