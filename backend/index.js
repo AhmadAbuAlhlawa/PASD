@@ -335,7 +335,53 @@ app.get('/buildings/:city_id', async (req, res) => {
         const addresses = await Addresses_Model.find({ city_id: city_id });
         const addressIds = addresses.map(address => address._id);
         
-        const buildings = await Buildings_Model.find({ address_id: { $in: addressIds } }).populate({ path: 'address_id' });
+        let buildings = await Buildings_Model.find({ address_id: { $in: addressIds } }).populate({ path: 'address_id' }).lean();
+        // fetch front image for each building
+
+        // Convert building _id values to strings
+        const buildingIds = buildings.map((building) => building._id.toString());
+
+        // Fetch all images for the buildings
+        const images = await conn.db.collection('images').find({
+          building_id: { $in: buildingIds },
+          Type: 'Front Image',
+        }).toArray();
+
+        // Create a map of images by building ID for quick lookup
+        const imageMap = images.reduce((map, image) => {
+          
+          map[image.building_id] = {
+            image_id: image._id,
+            file_id: image.fileId,
+            filename: image.filename
+          };
+
+          return map;
+        }, {});
+
+        // Assign images and architects to their respective buildings
+        buildings = buildings.map((building) => {
+          const buildingId = building._id.toString();
+
+          // Assign the corresponding image to the building
+          if (imageMap[buildingId]) {
+            building.image = imageMap[buildingId];
+          }
+
+          return building;
+        });
+
+        // Populate the addresses for each building
+        for(let i = 0; i < buildings.length; i++) {
+          buildings[i].address = await Addresses_Model.findById(buildings[i].address_id).lean();
+        }
+
+        // Populate the architect for each building
+        for(let i = 0; i < buildings.length; i++) {
+          buildings[i].architect = await Architects_Model.findById(buildings[i].architect_id).lean();
+        }
+
+        // Respond with the populated buildings in JSON format
         res.status(200).json(buildings);
     } catch (error) {
         console.error("Error fetching buildings for city:", error);
