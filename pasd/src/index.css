@@ -24,3 +24,6 @@ code {
 .content {
   flex: 1;
 }
+.css-1nmdiq5-menu{
+  z-index: 5555555 !important;
+}

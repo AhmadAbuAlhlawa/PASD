@@ -6,3 +6,12 @@
     max-width: 500px;
     margin-bottom: 70px;
 }
+.desc_on_map {
+    width: 100%;
+    -webkit-line-clamp: 1; /* Ensures only one line is shown */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
