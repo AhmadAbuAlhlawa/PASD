@@ -22,7 +22,7 @@
 .logo img {
     filter: invert(1);
     width: 100%;
-    max-width: 25px;
+    max-width: 50px;
 }
 .footer_container h5 {
     font-weight: bold;
@@ -51,8 +51,6 @@
 .footer_container .social_links a{
     color: #fff;
     text-decoration: none;
-    border: 1px solid #626262;
-    padding: 5px;
 }
 .footer_bottom .pages_links {
     display: flex;
