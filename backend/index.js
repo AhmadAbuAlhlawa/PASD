@@ -1457,6 +1457,22 @@ app.get('/buildings/:id', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+app.get('/city_frontend/:id', async (req, res) => {
+  try {
+    // Find the city by _id from the database
+    let city = await Cities_Model.findById(req.params.id)
+    .populate({
+       path: 'country_id', // Populate country_id
+    });
+    if (!city) {
+      return res.status(404).json({ message: 'City not found' });
+    }
+    res.json(city);
+    } catch (error) {
+      console.error('Error fetching city:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+});
 app.get('/buildings_frontend/:id', async (req, res) => {
   try {
     // Find the building by _id from the database
