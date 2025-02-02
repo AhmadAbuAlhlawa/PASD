@@ -10,18 +10,18 @@
   color: #fff !important;
 }
 .navbar2 button {
-  background: #004437;
+  background: #3C4E4A;
   border: 0;
   color: #fff;
 }
 .navbar2 button:hover {
-  background: #00352b;
+  background: #293532;
 }
 .navbar2 .dropdown-menu{
   background: #272727;
 }
 .dropdown-item:focus, .dropdown-item:hover{
-  background: #004437;
+  background: #3C4E4A;
 }
 /* news */
 .news_container{
