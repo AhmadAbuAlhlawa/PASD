@@ -3,9 +3,11 @@ import './css/About_us.css'
 const AboutUs = () => {
   const team = [
     { name: 'Dr. Yara Saifi', image: 'Dr. Yara Saifi.jpg' },
+    { name: 'Dr. Safa Nassereldin', image: 'Dr. Safa Nassereldin.jpg' },
+    { name: 'Dr. Salah Odeh', image: 'Dr. Salah Odeh.png' },
+    
     { name: 'Aya Jafreh', image: 'Aya Jafreh.jpg' },
     { name: 'Aya shream', image: 'Aya shream.jpg' },
-    
     { name: 'Ayham Mallh', image: 'Ayham Mallh.jpeg' },
     { name: 'Ayham hamad', image: 'Ayham naeem hamad.jpg' },
     { name: 'Balsam al-Salamah', image: 'Balsam Khader al- Salamah.jpg' },
@@ -14,20 +16,18 @@ const AboutUs = () => {
     { name: 'Dunia Najajra', image: 'Dunia Najajra.jpeg' },
     { name: 'Huthaifa Mousa', image: 'Huthaifa Jafar Mahmoud Mousa.jpg' },
     { name: 'Lugain Malek', image: 'Lugain Malek.jfif' },
-    
     { name: 'Ameera Maharbah', image: 'Ameera Maharbah.jpg' },
     { name: 'Dana Abuayyash', image: 'Dana Abuayyash.jpg' },
     { name: 'Moddar Khatib', image: 'Moddar Khatib.jpg' },
-    
     { name: 'Narmeen Attallah', image: 'Narmeen Attallah.jpg' },
     { name: 'Omar hussein', image: 'Omar hussein.jpg' },
     { name: 'Razan AbuRayyan', image: 'Razan AbuRayyan.jpeg' },
-
     { name: 'Safaa Alajarmah', image: 'Safaa Alajarmah.jpg' },
     { name: 'Sandy Jaafreh', image: 'Sandy Fareed Jaafreh.jpg' },
     { name: 'Yazed rabhh', image: 'YAZED MOHAMED ABED RABHH.jpg' },
     { name: 'Yqoub halabea', image: 'Yqoub halabea.jpg' },
   ];
+  
   const software_team = [
     { name: 'Masa Aljayyousi', image: 'Masa Aljayyousi.jpg' },
     { name: 'Ahmad Abu Al-Hlawa', image: 'Ahmad Abu Al-Hlawa.png' },
@@ -39,7 +39,7 @@ const AboutUs = () => {
     <div className='about_us'>
       <div className="about_us_container">
         <div className='team'>
-          <h2 className='text-center'>Meet Our Team</h2>
+          <h2 className='mx-4'>Our Team</h2>
           <div className='team_members'>
             {team.map((member, index) => (
               <div key={index} className='team_member'>
