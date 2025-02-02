@@ -14,7 +14,7 @@ const SwiperBuildings = ({ architects }) => {
         architect.architect_id?.relatedBuildings?.length > 0 ? (
           <div key={architect._id}>
             <h3 className="mb-4 mt-4">
-              More buildings for Architect{' '}
+              Buildings by {' '}
               <span>{architect.architect_id?.architect_name}</span>
             </h3>
             <Swiper
@@ -33,6 +33,10 @@ const SwiperBuildings = ({ architects }) => {
               {architect.architect_id?.relatedBuildings?.map((building) => (
                 <SwiperSlide key={building._id}>
                   <a href={`/Buildings/${building._id}`} className="slider-image-container">
+                    <div className="slider-overlay">
+                      <h4 className="building-name">{building.building_name}</h4>
+                      <p className="building-desc">{building.en_description || "No description available"}</p>
+                    </div>
                     {building.image?.filename ? (
                       <img
                         src={building.image?.filename}
