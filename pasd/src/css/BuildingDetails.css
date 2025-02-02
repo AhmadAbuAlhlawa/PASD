@@ -34,7 +34,7 @@
 
 .details-title {
   font-size: 2rem;
-  margin-top: 60px;
+  margin-top: 30px;
   color: #000;
   text-align: center;
   font-weight: bold;
@@ -70,16 +70,25 @@
  .carousel-control-prev-icon {
  background-color: #000;
 }
+.desc_map{
+    display: flex;
+    gap: 20px;
+    max-width: 1066px;
+    margin: 0 auto;
+    margin-top: 60px;
+}
 .details-description {
   font-size: 1.2rem;
   color: #000;
   text-align: justify;
-  max-width: 1100px;
-  margin: 10px auto;
-  margin-top: 40px;
+  /* max-width: 900px; */
+}
+.hero_section .leaflet-container{
+  height: 300px !important;
+  width: 100%;
 }
 .slider_360{
-  padding: 60px 0;
+  /* padding: 60px 0; */
   background: #596869;
   color: #fff;
   text-align: center;
@@ -103,7 +112,7 @@
   width: 100%;
   border-collapse: collapse;
   margin: 20px 0;
-  background-color: white;
+  /* background-color: white; */
   color: #333;
   width: 45%;
   aspect-ratio: 1 / 1;
@@ -142,7 +151,7 @@
   width: 20%; /* Small width for table headers */
   text-align: left; /* Align text to the left for better readability */
   white-space: nowrap; /* Prevents text wrapping in headers */
-  background: #AABA9F;
+  background: #cacaca;
   color: #3b3b3b;
   font-weight: bold;
 }
@@ -151,7 +160,7 @@
   width: 80%; /* Large width for table data */
   text-align: left; /* Align text to the left */
   word-wrap: break-word; /* Allows text to wrap if it's too long */
-  background: #aaba9fba;
+  background: #ffffffba;
 }
 .details-table th,
 .details-table td {

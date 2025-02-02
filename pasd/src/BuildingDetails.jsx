@@ -6,6 +6,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
 import SwiperBuildings from './components/SwiperBuildings';
+import MapComponent from './components/MapComponent';
 
 function BuildingDetails() {
   const { id } = useParams();
@@ -124,12 +125,15 @@ function BuildingDetails() {
                 <p>No images available for this building.</p>
               )}
             </div>
-            <p className="details-description">{foundBuilding.en_description}</p>
+            <div className="desc_map">
+              <p className="details-description">{foundBuilding.en_description}</p>
+              <MapComponent buildings={[foundBuilding]} page={"buildingDetails"} />
+            </div>
           </div>
           {/* section_2 */}
 
-          <div className="slider_360">
             <h2 className="details-title">360 view</h2>
+          <div className="slider_360">
             { foundBuilding.thsLink !== "" ?
               <div className="view_360_div" style={{ position: "relative",  overflow: "hidden" }}>
               <iframe
