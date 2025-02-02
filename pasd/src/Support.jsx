@@ -81,8 +81,11 @@ const Support = () => {
         borderRadius: 2,
       }}
     >
-      <Typography className="heading" variant="h5" sx={{ mb: 3, textAlign: "center", fontWeight: "bold" }}>
+      <Typography className="heading" variant="h5" sx={{ mb: 1, textAlign: "center", fontWeight: "bold" }}>
         Support Form
+      </Typography>
+      <Typography sx={{textAlign: "center", mb: 3}}>
+        Support us with Archive or Financially 
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
@@ -163,7 +166,7 @@ const Support = () => {
             onChange={handleChange}
           >
             <MenuItem value=""><em>None</em></MenuItem>
-            <MenuItem value="Archive support">Support with Us Archive</MenuItem>
+            <MenuItem value="Archive support">Support Us with Archive</MenuItem>
             <MenuItem value="Financial support">Support Us Financially</MenuItem>
           </Select>
         </FormControl>
