@@ -1,87 +1,42 @@
 import React, { useEffect } from 'react';
-import Select from 'react-select';
 import './css/Cities.css';
-import MapComponent from './components/MapComponent';
 
 const Cities = () => {
     const [cities, setCities] = React.useState([]);
-    const [selectedCity, setSelectedCity] = React.useState(null);
-    const [buildings, setBuildings] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
-    
-    const cityId = new URLSearchParams(window.location.search).get('city_id');
-    // make cityId selectedCity if it's on cities
-    useEffect(() => {
-        if (cityId) {
-            const selectedCity = cities.find(city => city.value === cityId);
-            setSelectedCity(selectedCity);
-        }
-    }, [cities, cityId]);
 
     // Fetch cities data from API
     useEffect(() => {
+        setLoading(true);
         fetch('http://localhost:5000/get-cities')
             .then(response => response.json())
             .then(json => {
-                const formattedCities = json.map(city => ({
-                    value: city._id,
-                    label: city.city_name
-                }));
-                setCities(formattedCities);
+                setLoading(false);
+                setCities(json);
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.error(error);
+                setLoading(false);
+            });
     }, []);
 
-    useEffect(() => {
-        if (selectedCity) {
-            setLoading(true);
-            // Fetch map data for the selected city from API
-            fetch(`http://localhost:5000/buildings/${selectedCity.value}`)
-                .then(response => response.json())
-               .then(mapData => {
-                    console.log(mapData);
-                    setBuildings(mapData); // Update buildings state with map data
-                    setLoading(false);
-                })
-               .catch(error => {
-                    console.error(error);
-                    setLoading(false);
-                    setBuildings([]); 
-               });
-        }
-    }, [selectedCity])  // Only re-run effect if selectedCity changes)
-    // Handle city selection
-    const handleCityChange = selectedOption => {
-        setSelectedCity(selectedOption);
-        console.log("Selected City:", selectedOption);
-    };
-
     return (
-        <div className='cities_maps'>
-            <div className='input p-4'>
-                <h4>Select a City</h4>
-                <Select
-                    options={cities} 
-                    value={selectedCity} 
-                    onChange={handleCityChange} 
-                    placeholder="Choose a city..." 
-                    isClearable
-                />
+        <div className='p-4'>
+            {loading ? <h2>Loading cities...</h2>
+            :
+            cities.length > 0 ?
+            <div className='cities_row'>
+                {cities.map(city => (
+                    <a href={`/map/${city._id}`} key={city._id} className='city' 
+                    style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${city.map_pic})` }}>
+                        <h3>{city.city_name}</h3>
+                        <div className='blur'>Click to view map</div>
+                    </a>
+                ))}
             </div>
-            <div className='city'>
-                {selectedCity == null ? 
-                <h2 className='px-4'>Choose a city to display map...</h2>
-                :
-                buildings.length > 0 ?
-                loading ?
-                <h2 className='px-4'>Loading...</h2> :
-                <>
-                <MapComponent buildings={buildings} /> 
-                </>
-                :
-                <h2 className='px-4'>No buildings found for this city.</h2>
-                }
-            </div>
+            :
+            <h2 className='text-danger'>No cities found</h2>
+            }
         </div>
     );
 };
