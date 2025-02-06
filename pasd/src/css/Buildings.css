@@ -4,17 +4,30 @@
     padding: 20px;
     position: relative;
   }
+  .Buildings .filter_search{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+  }
+  .Buildings .city-select{
+    height: 47px;
+  }
+  .city-select .css-13cymwt-control{
+    height: 100%;
+    background: rgba(234, 232, 228, 0.6);;
+    border: 2px solid #ccc;
+  }
 .Buildings  .search-container {
     text-align: center;
     background-color: rgba(234, 232, 228, 0.6);
     border: 2px solid #ccc;
     border-radius: 10px;
-    width: 90%;
+    width: 100%;
     max-width: 600px;
-    margin: 40px auto;
-    margin-top: 60px;
-    display: flex;
-    justify-content: space-between;
+    margin: 0;
+    
 }
 .Buildings .search-container input {
   display: flex;

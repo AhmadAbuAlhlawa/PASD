@@ -5,13 +5,20 @@
   align-items: center;
   padding: 0 20px; /* Padding for spacing */
   font-family: helvetica !important;
+  justify-content: space-between;
 } 
 .navbar-logo {
   color: white; /* Text color */
   font-size: 20px; /* Adjust font size */
   font-weight: normal;
 }
-
+.navbarr .button_login{
+  color: #fff;
+  background: #272727;
+}
+.navbarr .button_login:hover{
+  background: #353535;
+}
 .navbarr span, .navbarr strong {
   font-family: helvetica !important;
   font-weight: 400;

@@ -6,7 +6,7 @@
   align-items: center;
   /* padding: 20px; */
   min-height: 100vh;
-  background-color: #E5E4E2;
+  background-color: #e5e4e2;
 }
 
 .details-card {
@@ -17,11 +17,11 @@
   text-align: left;
 }
 
-.details_description_image{
+.details_description_image {
   display: flex;
   align-items: center;
 }
-.details-image-container{
+.details-image-container {
   display: flex;
 }
 .details-image {
@@ -40,7 +40,7 @@
   font-weight: bold;
   text-transform: capitalize;
 }
-.hero_section{
+.hero_section {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   align-items: center;
@@ -56,49 +56,56 @@
   }
 }
 
-.hero_section #buildingCarousel{
+.hero_section #buildingCarousel {
   height: 600px !important;
   cursor: pointer;
 }
-#buildingCarousel .carousel-inner, .carousel-item, .carousel-item img {
+#buildingCarousel .carousel-inner,
+.carousel-item,
+.carousel-item img {
   height: 100% !important;
 }
 .carousel-item img {
   object-fit: contain;
 }
 .carousel-control-next-icon,
- .carousel-control-prev-icon {
- background-color: #000;
+.carousel-control-prev-icon {
+  background-color: #000;
 }
-.desc_map{
-    display: flex;
-    gap: 20px;
-    max-width: 1066px;
-    margin: 0 auto;
-    margin-top: 60px;
+.desc_map {
+  display: flex;
+  gap: 20px;
+  max-width: 1066px;
+  margin: 0 auto;
+  margin-top: 60px;
 }
 .details-description {
   font-size: 1.2rem;
   color: #000;
   text-align: justify;
   /* max-width: 900px; */
+  flex-basis: 60%;
 }
-.hero_section .leaflet-container{
+.desc_map .map {
+  /* width: 100%; */
+  flex-basis: 40%;
+}
+.desc_map .leaflet-container {
   height: 300px !important;
   width: 100%;
 }
-.slider_360{
+.slider_360 {
   /* padding: 60px 0; */
   background: #596869;
   color: #fff;
   text-align: center;
 }
-.slider_360 .details-title{
+.slider_360 .details-title {
   margin: 0;
   color: inherit;
   margin-bottom: 30px;
 }
-.view_360_div{
+.view_360_div {
   width: 100%;
   max-width: 1000px;
   margin: auto;
@@ -106,7 +113,7 @@
   margin-top: 20px;
 }
 .view_360_div iframe {
-  height: 100%
+  height: 100%;
 }
 .details-table {
   width: 100%;
@@ -212,9 +219,9 @@
   margin-top: 50px;
 }
 .architects-section {
-  background: #AABA9F;
+  background: #aaba9f;
   color: #000;
-  padding: 20px;
+  padding: 80px;
 }
 .architects-section span {
   font-weight: bold;
