@@ -39,7 +39,7 @@ const SwiperBuildingsArchPage = ({ buildings }) => {
                 />
               ) : (
                 <img
-                  src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
+                  src="https://img.freepik.com/free-photo/abstract-surface-textures-white-concrete-stone-wall_74190-8189.jpg"
                   alt="No image available"
                   className="slider-image"
                 />
