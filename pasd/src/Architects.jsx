@@ -18,7 +18,6 @@ const Architects = () => {
     const [pagesCount, setPagesCount] = useState(0);
     const [foundArchitects, setFoundArchitects] = useState([]); 
     const [filteredArchitects, setFilteredArchitects] = useState([]); 
-    const [sorted, setSorted] = useState(false);
 
     // Debouncing logic for the search input
     useEffect(() => {
@@ -36,7 +35,7 @@ const Architects = () => {
   
     setLoading(true);
   
-    fetch(`http://localhost:5000/Architects_frontend?page=${page}&title=${debouncedSearch}&sorted=${sorted}`, { signal })
+    fetch(`http://localhost:5000/Architects_frontend?page=${page}&title=${debouncedSearch}`, { signal })
       .then((res) => {
         if (!res.ok) {
           throw new Error("Request failed");
@@ -61,7 +60,7 @@ const Architects = () => {
       });
   
     return () => controller.abort(); // Abort previous request when effect is re-run
-  }, [page, sorted, debouncedSearch]);
+  }, [page, debouncedSearch]);
 
     // Handle page change
     const handlePageChange = (e, value) => {
@@ -74,24 +73,11 @@ const Architects = () => {
         setPage(1); // Reset page number to 1 on new search
         setSearch(text);
     };
-    
-    const toggleFilterMenu = () => {
-        setFilterMenuVisible((prev) => !prev);
-    };
-
-    const applyFilter = (option) => {
-        let sortedArchitects = [...filteredArchitects];
-
-        if (option === "alphabetical") {
-          setSorted(true);
-        }
-
-        setFilteredArchitects(sortedArchitects);
-        setFilterMenuVisible(false);
-    };
+  
         
   return (
     <div className="Architects">
+      <h2>Architects</h2>
       <div className="search-container">
         <input type="text"
           value={search}
@@ -99,21 +85,15 @@ const Architects = () => {
           placeholder="Search here..."
           className="search-input"
         />
-        <Button className="search-button" onClick={toggleFilterMenu}>Filter</Button>
       </div>
-      {filterMenuVisible && (
-        <div className="filter-menu show">
-          <Button onClick={() => applyFilter("alphabetical")}>Alphabetical order</Button>
-        </div>
-      )}
       {loading? (
-        <h2>Loading...</h2>
+        <h2 className='mt-3'>Loading...</h2>
       ) : (
         <>
           <div className="building-grid">
             {filteredArchitects.length > 0 ? 
               filteredArchitects.map((architect) => (
-                <div className="arch_card">
+                <a href={`/Architects/${architect._id}`} className="arch_card">
                 <div className="arch_card-image-container">
                   {architect.filename ?
                     <img src={`${architect.filename}`} alt={`${architect.architect_name} image`} className="arch_card-image" />
@@ -128,7 +108,7 @@ const Architects = () => {
                     {("Learn More")}
                   </a>
                 </div>
-              </div>
+              </a>
               ))
             :
             <h2>No Architects found</h2>
