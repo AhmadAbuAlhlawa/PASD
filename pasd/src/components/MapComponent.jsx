@@ -32,11 +32,7 @@ const MapComponent = ({ buildings, page }) => {
           let buildingImage;
 
           if (page === "cities") {
-            buildingImage = building.image?.filename || "https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg";
-          } else if (page === "buildingDetails") {
-            const frontImage = building.images?.filter((image) => image.type === "Front Image").map((image) => image.filename)[0];
-          
-            buildingImage = frontImage || "https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"; // Default image if no front image
+            buildingImage = building.image?.filename || "https://img.freepik.com/free-photo/abstract-surface-textures-white-concrete-stone-wall_74190-8189.jpg";
           }
           
           // إذا كان هناك صورة للمبنى، نقوم بتعيينها كـ icon
