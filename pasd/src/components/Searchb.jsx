@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../css/Searchb.css";  
+import "../css/Searchb.css";
 const Searchb = () => {
   const [query, setQuery] = useState(""); // State to hold the search query
   const [results, setResults] = useState(""); // State to hold search results
@@ -11,19 +11,18 @@ const Searchb = () => {
     } else {
       setResults(`You searched for: ${query}`);
       fetch(`http://localhost:5000/search?q=${query}`)
-      .then(response => response.json())
-      .then(data => setData(data))
-      .catch(error => console.error(error));
+        .then((response) => response.json())
+        .then((data) => setData(data))
+        .catch((error) => console.error(error));
     }
   };
   const handleSearchChange = (e) => {
     setQuery(e.target.value);
-    if(e.target.value.trim() === "") {
+    if (e.target.value.trim() === "") {
       setResults("");
       setData([]);
-      
     }
-  }
+  };
   return (
     <div className="search-container">
       <div className="search-wrapper">
@@ -34,7 +33,9 @@ const Searchb = () => {
           onChange={handleSearchChange}
           className="search-input"
         />
-        <button onClick={handleSearch} className="search-button">Search</button>
+        <button onClick={handleSearch} className="search-button">
+          Search
+        </button>
       </div>
       <div>{results && <p>{results}</p>}</div>
       <div>
@@ -49,7 +50,7 @@ const Searchb = () => {
               } else if (item.type === "architect") {
                 link = `/architects/${item._id}`;
               } else if (item.type === "city") {
-                link = `/cities?city_id=${item._id}`;
+                link = `/map/${item._id}`;
               }
 
               return (
