@@ -4,27 +4,27 @@ import { useLocation } from "react-router-dom";
 
 function Navbar2() {
   const location = useLocation();
-  const [logs, setLogs] = useState([]);
-  const [showLogs, setShowLogs] = useState(false);
+  const [Events, setEvents] = useState([]);
+  const [showEvents, setShowEvents] = useState(false);
 
-  // Fetch newest_logs
+  // Fetch newest_Events
   useEffect(() => {
-    fetch("http://localhost:5000/newest_logs")
+    fetch("http://localhost:5000/Events")
       .then((res) => res.json())
-      .then((logs) => {
-        setLogs(logs);
-        console.log(logs);
+      .then((Events) => {
+        setEvents(Events);
+        console.log(Events);
       })
       .catch((error) => console.error(error)); // Handle error here
   }, []);
 
-  // Toggle display of logs
-  const toggleLogs = () => {
-    setShowLogs((prev) => !prev);
+  // Toggle display of Events
+  const toggleEvents = () => {
+    setShowEvents((prev) => !prev);
   };
 
   return (
-    <nav className="navbar2 navbar navbar-expand-lg sticky-top">
+    <nav className="navbar2 px-2 navbar navbar-expand-lg sticky-top">
       <div className="container-fluid">
         <button
           className="navbar-toggler"
@@ -63,8 +63,8 @@ function Navbar2() {
               </a>
               <ul className="dropdown-menu">
                 <li>
-                  <a className="dropdown-item" href="/Cities">
-                    Cities
+                  <a className="dropdown-item" href="/Architects">
+                    Architects
                   </a>
                 </li>
                 <li>
@@ -73,8 +73,8 @@ function Navbar2() {
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/Architects">
-                    Architects
+                  <a className="dropdown-item" href="/Cities">
+                    Cities
                   </a>
                 </li>
               </ul>
@@ -87,25 +87,26 @@ function Navbar2() {
           </ul>
         </div>
         <div className="news_container">
-          <button className="btn" onClick={toggleLogs}>
+          <button className="btn" onClick={toggleEvents}>
             News
           </button>
-          {showLogs && (
-            <div className="logs-container">
-              <h5 className="mb-4">Latest News</h5>
-              <ul>
-                {logs.length > 0 ? (
-                  logs.map((log, index) => (
-                    <li key={index}>
-                      <span>Action:</span> {log.action}
-                      <br />
-                      <span>Details:</span> {log.details}
-                      <br />
-                      <span>Date:</span> {new Date(log.timestamp).toLocaleString()}
+          {showEvents && (
+            <div className="Events-container">
+              <h5 className="mb-4">Latest Events</h5>
+              <ul className="events_row">
+                {Events.length > 0 ? (
+                  Events.map((event, index) => (
+                    <li className="event" key={index}>
+                      <p className="event_title">{event.title}</p>
+                      <p className="mb-0">{event.content}</p>
+                      <p className="date">
+                        <span>Date:</span>{" "}
+                        {new Date(event.createdAt).toLocaleString()}
+                      </p>
                     </li>
                   ))
                 ) : (
-                  <h2 className="my-5">No logs available.</h2>
+                  <h2 className="my-5">No Events available.</h2>
                 )}
               </ul>
             </div>
