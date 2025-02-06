@@ -22,7 +22,8 @@ const Cities = () => {
 
     return (
         <div className='p-4'>
-            {loading ? <h2>Loading cities...</h2>
+            <h2>Cities</h2>
+            {loading ? <h2 className='mt-3'>Loading cities...</h2>
             :
             cities.length > 0 ?
             <div className='cities_row'>
