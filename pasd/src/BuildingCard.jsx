@@ -1,29 +1,41 @@
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./css/BuildingCard.css";
-
 
 function BuildingCard({ building }) {
   const navigate = useNavigate();
 
   return (
-    <div className="card">
+    <a href={`Buildings/${building._id}`} className="card">
       <div className="card-image-container">
-        {building.image?.filename ?
-          <img src={`${building.image?.filename}`} alt={`${building.building_name} image`} className="card-image" />
-          :
-          <img src={'https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg'} alt={`${building.building_name} image`} className="card-image" />
-        }
+        {building.image?.filename ? (
+          <a href={`/Buildings/${building._id}`}>
+            <img
+              src={`${building.image?.filename}`}
+              alt={`${building.building_name} image`}
+              className="card-image"
+            />
+          </a>
+        ) : (
+          <a href={`/Buildings/${building._id}`}>
+            <img
+              src={
+                "https://img.freepik.com/free-photo/abstract-surface-textures-white-concrete-stone-wall_74190-8189.jpg"
+              }
+              alt={`${building.building_name} image`}
+              className="card-image"
+            />
+          </a>
+        )}
       </div>
       <div className="card-content">
         <h3>{building.building_name}</h3>
         <p>{building.en_description}</p>
         <a href={`/Buildings/${building._id}`} className="card-button">
-          {("Learn More")}
+          {"Learn More"}
         </a>
       </div>
-    </div>
+    </a>
   );
 }
 
